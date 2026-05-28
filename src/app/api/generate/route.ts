@@ -1,102 +1,93 @@
 import { NextResponse } from "next/server";
-import Replicate from "replicate";
 import { createClient } from "@/utils/supabase/server";
 
-const replicate = new Replicate({
-  auth: process.env.REPLICATE_API_TOKEN,
-});
+export const maxDuration = 120; // 2 minutes max duration for Vercel
 
-const GARMENT_CATEGORY_MAP: Record<string, string> = {
-  "Full Sleeve Shirt": "upper_body",
-  "Half Sleeve Shirt": "upper_body",
-  "Kurta": "upper_body",
-  "Pant (Formal)": "lower_body",
-  "Pant (Casual)": "lower_body",
-  "Salwar Suit": "dresses",
-  "Saree Blouse": "upper_body",
-};
-
-async function urlToBase64(url: string) {
-  const response = await fetch(url);
-  const arrayBuffer = await response.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-  const mimeType = response.headers.get("content-type") || "image/jpeg";
-  return `data:${mimeType};base64,${buffer.toString("base64")}`;
-}
-
-export async function POST(request: Request) {
+export async function POST(req: Request) {
+  const supabase = await createClient();
+  let trialId = null;
+  
   try {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const body = await req.json();
+    trialId = body.trialId;
+    const { fabricImageUrl, customerImageUrl, garmentType } = body;
 
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!trialId || !fabricImageUrl || !customerImageUrl || !garmentType) {
+      return NextResponse.json({ success: false, error: "Missing required fields" }, { status: 400 });
     }
 
-    const body = await request.json();
-    const { fabricUrl, customerUrl, garmentType } = body;
-
-    if (!fabricUrl || !customerUrl || !garmentType) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
-
-    const category = GARMENT_CATEGORY_MAP[garmentType] || "upper_body";
-
-    // 1. Download and convert to Base64
-    const base64Fabric = await urlToBase64(fabricUrl);
-    const base64Customer = await urlToBase64(customerUrl);
-
-    // 2. Call Replicate
-    const output = await replicate.run(
-      "viktorfa/ootdiffusion:latest", 
-      {
-        input: {
-          person_image: base64Customer, 
-          cloth_image: base64Fabric, 
-          garment_type: category,
-        }
-      }
-    ) as unknown;
-
-    // Usually output is an array of strings (URLs)
-    const resultUrl = Array.isArray(output) ? output[0] : output;
-
-    // 3. Save to Supabase `trials` table
-    const { data: trialData, error: dbError } = await supabase
+    // 1. Update status to 'processing'
+    await supabase
       .from("trials")
-      .insert({
-        shop_id: user.id,
-        fabric_url: fabricUrl,
-        customer_url: customerUrl,
-        garment_type: garmentType,
-        result_url: resultUrl,
-        status: "Generated",
-      })
-      .select()
-      .single();
+      .update({ status: "processing" })
+      .eq("id", trialId);
 
-    if (dbError) {
-      console.error("Database error saving trial:", dbError);
-      // We still return success but maybe log the error.
+    // 2. Fetch images as Blobs for Gradio
+    const humanImgResponse = await fetch(customerImageUrl);
+    if (!humanImgResponse.ok) throw new Error("Failed to download human image");
+    const humanBlob = await humanImgResponse.blob();
+
+    const garmImgResponse = await fetch(fabricImageUrl);
+    if (!garmImgResponse.ok) throw new Error("Failed to download garment image");
+    const garmBlob = await garmImgResponse.blob();
+
+    // 3. Connect to Hugging Face Free Space
+    const { Client } = await import("@gradio/client");
+    const client = await Client.connect("yisol/IDM-VTON", {
+      token: process.env.HUGGINGFACE_API_TOKEN as any // Using the HF token they pasted here
+    });
+
+    // 4. Call the free Gradio API
+    const result = await client.predict("/tryon", [
+      { background: humanBlob, layers: [], composite: null }, // Human image for auto-masking
+      garmBlob, // Garment image
+      `${garmentType} made from this fabric`, // Garment description
+      true, // is_checked (use auto masking)
+      true, // is_checked_crop (auto crop)
+      30, // denoise_steps
+      42, // seed
+    ]);
+
+    const resultData = result.data as any[];
+    const resultUrl = resultData && resultData[0] ? resultData[0].url : null;
+    
+    if (!resultUrl) {
+      throw new Error("No output URL returned from Hugging Face API");
     }
 
-    return NextResponse.json({
-      success: true,
-      message: "AI Trial Generated successfully",
-      data: {
-        resultUrl,
-        trialId: trialData?.id,
-      },
-    });
-  } catch (error: unknown) {
-    const err = error as Error;
-    console.error("API error:", err);
-    return NextResponse.json(
-      { error: err.message || "Internal Server Error" },
-      { status: 500 }
-    );
+    // 5. Download result image from Gradio
+    const imgResponse = await fetch(resultUrl);
+    if (!imgResponse.ok) throw new Error("Failed to download generated image");
+    const arrayBuffer = await imgResponse.arrayBuffer();
+
+    // 6. Upload to Supabase Storage
+    const fileName = `${trialId}_${Date.now()}.webp`;
+    const { error: uploadError } = await supabase.storage
+      .from("result-images")
+      .upload(fileName, arrayBuffer, { contentType: "image/webp" });
+
+    if (uploadError) throw uploadError;
+
+    const { data: publicUrlData } = supabase.storage.from("result-images").getPublicUrl(fileName);
+    const finalResultUrl = publicUrlData.publicUrl;
+
+    // 7. Update trial in DB
+    await supabase
+      .from("trials")
+      .update({ 
+        status: "generated", 
+        result_image_url: finalResultUrl 
+      })
+      .eq("id", trialId);
+
+    return NextResponse.json({ success: true, resultUrl: finalResultUrl, trialId });
+
+  } catch (error: any) {
+    console.error("Generate error:", error);
+    if (trialId) {
+      // Safely mark the trial as failed so the frontend stops polling!
+      await supabase.from("trials").update({ status: "failed" }).eq("id", trialId);
+    }
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

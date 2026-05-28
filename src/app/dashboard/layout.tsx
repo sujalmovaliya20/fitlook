@@ -49,7 +49,7 @@ export default async function DashboardLayout({
                 Home
               </Link>
               <Link
-                href="#"
+                href="/dashboard/new-trial"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <PlusCircle className="h-4 w-4" />
@@ -63,7 +63,14 @@ export default async function DashboardLayout({
                 History
               </Link>
               <Link
-                href="#"
+                href="/dashboard/billing"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              >
+                <PlusCircle className="h-4 w-4" /> {/* Usually a credit card or similar, but using existing icon for now */}
+                Billing
+              </Link>
+              <Link
+                href="/dashboard/settings"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Settings className="h-4 w-4" />
