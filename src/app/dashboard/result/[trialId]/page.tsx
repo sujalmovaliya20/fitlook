@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { createClient } from "@/utils/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Share2, Download, RefreshCcw, Home } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import Image from "next/image";
+import { useToast } from "@/components/ui/Toast";
+
+import { FabricCard } from "@/components/tailor/FabricCard";
+import { ChalkLabel } from "@/components/tailor/ChalkLabel";
+import { MeasureDivider } from "@/components/tailor/MeasureDivider";
+import { ThreadButton } from "@/components/tailor/ThreadButton";
 
 type Trial = {
   id: string;
@@ -23,8 +25,12 @@ export default function ResultPage() {
   const params = useParams();
   const trialId = params.trialId as string;
   const supabase = createClient();
+  const { toast } = useToast();
+  
   const [trial, setTrial] = useState<Trial | null>(null);
   const [loading, setLoading] = useState(true);
+  
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -41,136 +47,246 @@ export default function ResultPage() {
         setTrial(data);
         if (data.status === "generated" || data.status === "failed") {
           clearInterval(interval);
+          setLoading(false);
         }
       }
-      setLoading(false);
+      if (data?.status !== "generated" && data?.status !== "processing" && data?.status !== "pending") {
+        setLoading(false);
+      }
     }
 
     fetchTrial();
-
-    // Poll every 5 seconds if processing
     interval = setInterval(fetchTrial, 5000);
-
     return () => clearInterval(interval);
   }, [trialId, supabase]);
 
-  if (loading) {
-    return <div className="p-8 flex items-center justify-center min-h-[50vh]"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>;
-  }
+  const generateWatermarkedImage = async (): Promise<string | null> => {
+    if (!trial?.result_image_url || !canvasRef.current) return null;
+    
+    return new Promise((resolve) => {
+      const img = new window.Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        const canvas = canvasRef.current!;
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return resolve(null);
 
-  if (!trial) {
-    return (
-      <div className="p-8 text-center space-y-4">
-        <h2 className="text-xl font-semibold">Trial not found</h2>
-        <Link href="/dashboard"><Button>Back to Dashboard</Button></Link>
-      </div>
-    );
-  }
+        // Draw original image
+        ctx.drawImage(img, 0, 0);
 
-  if (trial.status === "pending" || trial.status === "processing") {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-8 max-w-md mx-auto text-center">
-        <div className="relative">
-          <div className="w-24 h-24 rounded-full border-4 border-muted flex items-center justify-center">
-            <Loader2 className="w-10 h-10 animate-spin text-primary" />
-          </div>
-          <div className="absolute -bottom-2 -right-2 bg-background rounded-full p-1 border">
-            ✨
-          </div>
-        </div>
-        <div className="space-y-2">
-          <h2 className="text-2xl font-bold tracking-tight">Stitching your virtual garment...</h2>
-          <p className="text-muted-foreground text-sm">
-            Please wait while our AI models drape the {trial.fabric_type || 'fabric'} onto {trial.customer_name}. This usually takes about 30-60 seconds.
-          </p>
-        </div>
-      </div>
-    );
-  }
+        // Draw dark gradient overlay at bottom
+        const gradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
+        gradient.addColorStop(0, "rgba(0,0,0,0)");
+        gradient.addColorStop(1, "rgba(0,0,0,0.8)");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
 
-  if (trial.status === "failed") {
-    return (
-      <div className="max-w-md mx-auto mt-12">
-        <Card className="border-destructive/50 bg-destructive/5 text-center">
-          <CardHeader>
-            <CardTitle className="text-destructive">Generation Failed</CardTitle>
-            <CardDescription>Something went wrong while generating the AI trial.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">The AI model couldn't process this combination correctly.</p>
-            <Link href="/dashboard/new-trial" className="block w-full">
-              <Button className="w-full"><RefreshCcw className="w-4 h-4 mr-2" /> Try Again</Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
+        // Draw Watermark text
+        ctx.fillStyle = "#C9A84C"; // Gold
+        ctx.font = "italic 300 48px 'Cormorant Garamond', serif";
+        ctx.textAlign = "right";
+        ctx.fillText("Styled by FitLook AI", canvas.width - 40, canvas.height - 40);
 
-  const handleShare = () => {
-    const text = encodeURIComponent(`Check my virtual look! ${trial.result_image_url}`);
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+        resolve(canvas.toDataURL("image/jpeg", 0.9));
+      };
+      img.src = trial.result_image_url;
+    });
+  };
+
+  const handleShare = async () => {
+    toast("Generating shareable image...", "info");
+    const dataUrl = await generateWatermarkedImage();
+    if (!dataUrl) {
+      toast("Failed to generate share image", "error");
+      return;
+    }
+
+    // Convert dataUrl to File
+    const res = await fetch(dataUrl);
+    const blob = await res.blob();
+    const file = new File([blob], "fitlook-result.jpg", { type: "image/jpeg" });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          title: "My FitLook Trial",
+          text: `Check out how this ${trial?.fabric_type} looks on me, generated by FitLook AI!`,
+          files: [file],
+        });
+      } catch (err) {
+        // Fallback to whatsapp link
+        const text = encodeURIComponent(`Check my virtual look! ${trial?.result_image_url}`);
+        window.open(`https://wa.me/?text=${text}`, '_blank');
+      }
+    } else {
+      // Fallback to whatsapp link
+      const text = encodeURIComponent(`Check my virtual look! ${trial?.result_image_url}`);
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
   };
 
   const handleDownload = async () => {
     try {
-      const response = await fetch(trial.result_image_url);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
+      toast("Downloading high-res image...", "info");
+      const dataUrl = await generateWatermarkedImage();
+      const url = dataUrl || trial!.result_image_url;
+      
       const a = document.createElement('a');
       a.href = url;
-      a.download = `fitlook_trial_${trial.customer_name.replace(/\s+/g, '_')}.webp`;
+      a.download = `fitlook_${trial!.customer_name.replace(/\s+/g, '_')}.jpg`;
       document.body.appendChild(a);
       a.click();
       a.remove();
-      window.URL.revokeObjectURL(url);
+      toast("Download complete!", "success");
     } catch (e) {
-      alert("Failed to download image. You can right-click and save it.");
+      toast("Failed to download image.", "error");
     }
   };
 
-  return (
-    <div className="max-w-3xl mx-auto space-y-6 pb-12">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Virtual Trial Result</h1>
-          <p className="text-muted-foreground">{trial.customer_name} • {trial.garment_type}</p>
+  if (loading || trial?.status === "processing" || trial?.status === "pending") {
+    // If the user navigates directly here while processing, show simple loader
+    return (
+      <div className="fixed inset-0 z-50 bg-[var(--bg-parchment)] flex items-center justify-center">
+         <div className="w-8 h-8 border-[2px] border-[var(--stitch)] border-t-[var(--thread-gold)] rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (trial?.status === "failed") {
+    return (
+      <div className="fixed inset-0 z-50 bg-[var(--bg-parchment)] flex flex-col items-center justify-center space-y-6 text-center">
+        <div className="w-16 h-16 bg-[rgba(139,26,26,0.08)] text-[var(--fabric-red)] border border-[var(--fabric-red)]/20 rounded-full flex items-center justify-center text-xl mb-2">
+          ✗
         </div>
-        {trial.fabric_image_url && (
-          <div className="w-12 h-12 rounded-md overflow-hidden border">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={trial.fabric_image_url} alt="Fabric" className="w-full h-full object-cover" />
-          </div>
-        )}
+        <h2 className="text-[32px] font-[family-name:var(--font-serif)] italic text-[var(--ink-dark)]">The stitch failed</h2>
+        <p className="font-[family-name:var(--font-sans)] text-[var(--ink-mid)] font-light">The AI model couldn't process this fabric and customer combination.</p>
+        <Link href="/dashboard/new-trial">
+          <ThreadButton>Try Again &rarr;</ThreadButton>
+        </Link>
       </div>
+    );
+  }
 
-      <div className="bg-muted/30 rounded-xl border overflow-hidden flex items-center justify-center p-4 min-h-[60vh]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src={trial.result_image_url} 
-          alt="Generated Result" 
-          className="max-h-[75vh] w-auto max-w-full rounded-md shadow-sm object-contain bg-black/5"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Button onClick={handleShare} className="bg-[#25D366] hover:bg-[#128C7E] text-white">
-          <Share2 className="w-4 h-4 mr-2" />
-          Share on WhatsApp
-        </Button>
-        <Button onClick={handleDownload} variant="outline">
-          <Download className="w-4 h-4 mr-2" />
-          Download Image
-        </Button>
-      </div>
+  return (
+    <div className="fixed inset-0 z-50 overflow-hidden flex flex-col md:flex-row bg-[var(--bg-deep)]">
+      <style>{`
+        @keyframes slideInRight {
+          from { transform: translateX(30px); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+          from { transform: scale(0); }
+          to { transform: scale(1); }
+        }
+        .animate-slide-in { animation: slideInRight 0.5s ease forwards; }
+        .animate-fade-in { opacity: 0; animation: fadeIn 0.4s ease 0.1s forwards; }
+        .corner-ornament { opacity: 0; animation: scaleIn 0.3s ease forwards; }
+        .corner-tl { animation-delay: 0.2s; }
+        .corner-tr { animation-delay: 0.25s; }
+        .corner-br { animation-delay: 0.3s; }
+        .corner-bl { animation-delay: 0.35s; }
+      `}</style>
       
-      <div className="flex gap-4 pt-4 border-t">
-        <Link href="/dashboard/new-trial" className="flex-1">
-          <Button variant="secondary" className="w-full">Try Another Fabric</Button>
-        </Link>
-        <Link href="/dashboard" className="flex-1">
-          <Button variant="ghost" className="w-full"><Home className="w-4 h-4 mr-2" /> Back to Dashboard</Button>
-        </Link>
+      {/* Hidden Canvas for Watermarking */}
+      <canvas ref={canvasRef} className="hidden" />
+
+      {/* LEFT COLUMN: THE FITTING MIRROR */}
+      <div className="w-full md:w-[60%] h-[50vh] md:h-screen flex flex-col items-center justify-center p-8 animate-fade-in relative">
+        <div className="relative inline-block">
+          {/* Frame Corners (Ornaments) */}
+          <div className="absolute -top-[12px] -left-[12px] w-[24px] h-[24px] border-t-[3px] border-l-[3px] border-[var(--thread-gold)] corner-ornament corner-tl z-20" />
+          <div className="absolute -top-[12px] -right-[12px] w-[24px] h-[24px] border-t-[3px] border-r-[3px] border-[var(--thread-gold)] corner-ornament corner-tr z-20" />
+          <div className="absolute -bottom-[12px] -right-[12px] w-[24px] h-[24px] border-b-[3px] border-r-[3px] border-[var(--thread-gold)] corner-ornament corner-br z-20" />
+          <div className="absolute -bottom-[12px] -left-[12px] w-[24px] h-[24px] border-b-[3px] border-l-[3px] border-[var(--thread-gold)] corner-ornament corner-bl z-20" />
+          
+          {/* The Mirror Frame & Image */}
+          <div className="relative border-[8px] border-[var(--fabric-cream)] rounded-[4px] shadow-2xl bg-black">
+            <div className="absolute inset-0 border-[2px] border-[rgba(255,255,255,0.1)] rounded-[2px] pointer-events-none z-10" />
+            <img 
+              src={trial!.result_image_url} 
+              className="w-full object-cover max-h-[70vh] rounded-[2px] block" 
+              alt="Tailor generated result"
+            />
+          </div>
+        </div>
+        
+        {/* Mirror Sub-label */}
+        <div className="mt-8 text-center max-w-sm">
+          <h2 className="font-[family-name:var(--font-serif)] italic text-[18px] text-[var(--bg-parchment)] tracking-wide mb-2">
+            {trial?.customer_name || "Customer"}
+          </h2>
+          <div className="font-[family-name:var(--font-sans)] font-normal text-[11px] text-[rgba(245,240,238,0.5)] uppercase tracking-[0.2em] border border-[rgba(245,240,238,0.15)] px-4 py-1.5 rounded-full inline-block">
+            {trial?.garment_type.replace(/-/g, ' ')} • {trial?.fabric_type || "Custom Fabric"}
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT COLUMN: THE TAILOR'S PRESENTATION */}
+      <div className="w-full md:w-[40%] h-[50vh] md:h-screen bg-[var(--bg-parchment)] p-[40px_32px] md:p-[60px_48px] flex flex-col overflow-y-auto animate-slide-in shadow-[-10px_0_30px_rgba(0,0,0,0.15)] relative z-10">
+        <div className="max-w-[400px] w-full mx-auto flex flex-col h-full">
+          
+          <ChalkLabel className="mb-2">Trial Complete</ChalkLabel>
+          <h1 className="font-[family-name:var(--font-serif)] text-[28px] text-[var(--ink-dark)] mb-6">Your look is ready.</h1>
+          
+          <MeasureDivider className="mb-8" />
+
+          {/* Order Chit / Summary */}
+          <FabricCard className="border-l-[3px] border-l-[var(--thread-gold)] p-0 overflow-hidden mb-8">
+            <div className="p-5 space-y-3">
+              <div className="grid grid-cols-[100px_1fr] gap-4 items-baseline">
+                <ChalkLabel>Customer</ChalkLabel>
+                <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)]">{trial?.customer_name || "Walk-in"}</p>
+              </div>
+              <div className="grid grid-cols-[100px_1fr] gap-4 items-baseline">
+                <ChalkLabel>Fabric Type</ChalkLabel>
+                <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)]">{trial?.fabric_type || "Unspecified"}</p>
+              </div>
+              <div className="grid grid-cols-[100px_1fr] gap-4 items-baseline">
+                <ChalkLabel>Garment</ChalkLabel>
+                <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] capitalize">{trial?.garment_type.replace(/-/g, ' ')}</p>
+              </div>
+              <div className="grid grid-cols-[100px_1fr] gap-4 items-baseline">
+                <ChalkLabel>Date</ChalkLabel>
+                <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)]">{new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+              </div>
+            </div>
+            <MeasureDivider />
+            <div className="px-5 py-2">
+              <p className="font-[family-name:var(--font-mono)] font-light text-[11px] text-[var(--ink-faint)]">
+                Order #{trial?.id.substring(0,8).toUpperCase()}
+              </p>
+            </div>
+          </FabricCard>
+
+          <MeasureDivider className="mb-8" />
+
+          {/* Actions */}
+          <div className="flex flex-col gap-3 mt-auto">
+            <ThreadButton className="w-full h-[52px]" onClick={handleShare}>
+              Share on WhatsApp &rarr;
+            </ThreadButton>
+            
+            <ThreadButton variant="ghost" className="w-full bg-[var(--bg-surface)] border-transparent" onClick={handleDownload}>
+              Download this look
+            </ThreadButton>
+            
+            <Link href="/dashboard/new-trial" className="w-full block">
+              <ThreadButton variant="ghost" className="w-full !text-[var(--ink-mid)] border border-[var(--stitch)] bg-transparent">
+                Try another fabric
+              </ThreadButton>
+            </Link>
+          </div>
+
+          <p className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-faint)] text-center mt-8">
+            Powered by FitLook AI &nbsp;·&nbsp; fitlook.in
+          </p>
+        </div>
       </div>
     </div>
   );

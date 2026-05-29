@@ -1,10 +1,16 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useTransition, useState } from "react";
 import { Search } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const statuses = [
+  { label: "All", value: "all" },
+  { label: "Generated", value: "generated" },
+  { label: "Pending", value: "pending" },
+  { label: "Failed", value: "failed" },
+];
 
 export function HistoryFilters() {
   const router = useRouter();
@@ -43,34 +49,41 @@ export function HistoryFilters() {
     updateFilters(val, currentStatus);
   };
 
-  const handleStatusChange = (val: string | null) => {
-    updateFilters(searchQuery, val || "all");
+  const handleStatusChange = (val: string) => {
+    updateFilters(searchQuery, val);
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 items-center">
-      <div className="relative w-full sm:w-[300px]">
-        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input
+    <div className="flex flex-col sm:flex-row gap-6 items-center justify-between bg-[var(--bg-card)] p-4 rounded-[var(--radius-lg)] border border-[var(--border-subtle)]">
+      {/* Search Bar */}
+      <div className="relative w-full sm:w-[320px] h-[48px]">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--text-muted)]" />
+        <input
           type="search"
           placeholder="Search by customer name..."
-          className="pl-8"
+          className="w-full h-full bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.08)] rounded-[10px] pl-12 pr-4 outline-none text-[15px] font-[family-name:var(--font-body)] font-normal text-[var(--text-primary)] transition-all duration-300 focus:border-[var(--accent-gold)] focus:shadow-[var(--glow-gold)]"
           value={searchQuery}
           onChange={handleSearchChange}
         />
       </div>
-      <Select value={currentStatus} onValueChange={handleStatusChange}>
-        <SelectTrigger className="w-full sm:w-[180px]">
-          <SelectValue placeholder="Filter by status" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All Statuses</SelectItem>
-          <SelectItem value="generated">Generated</SelectItem>
-          <SelectItem value="pending">Pending</SelectItem>
-          <SelectItem value="processing">Processing</SelectItem>
-          <SelectItem value="failed">Failed</SelectItem>
-        </SelectContent>
-      </Select>
+
+      {/* Filter Pills */}
+      <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 hide-scrollbar">
+        {statuses.map((status) => (
+          <button
+            key={status.value}
+            onClick={() => handleStatusChange(status.value)}
+            className={cn(
+              "px-5 py-2.5 rounded-full text-[14px] font-medium transition-all duration-300 whitespace-nowrap",
+              currentStatus === status.value
+                ? "bg-[rgba(201,168,76,0.15)] text-[var(--accent-gold)] shadow-[var(--glow-gold)]"
+                : "bg-[rgba(255,255,255,0.03)] text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.06)] hover:text-[var(--text-primary)] border border-[rgba(255,255,255,0.05)]"
+            )}
+          >
+            {status.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

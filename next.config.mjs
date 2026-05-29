@@ -5,6 +5,20 @@ const withPWA = withPWAInit({
 });
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+      {
+        protocol: 'https',
+        hostname: 'nwpdahypzesoojsgbfpa.supabase.co',
+      },
+    ],
+  },
+};
 
 export default withPWA(nextConfig);
