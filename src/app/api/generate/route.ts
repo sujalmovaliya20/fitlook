@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     const fabricBase64 = Buffer.from(garmArrayBuffer).toString("base64");
 
     // 3. STEP 1: Fabric -> Garment using Hugging Face (CosXL Edit via Gradio)
-    console.log("Connecting to Hugging Face CosXL for Step 1...");
+    // Connecting to Hugging Face CosXL for Step 1
     const { Client } = await import("@gradio/client");
     const hfToken = process.env.HUGGINGFACE_API_TOKEN;
 
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
 
     const fabricBlob = new Blob([Buffer.from(fabricBase64, "base64")], { type: "image/png" });
 
-    console.log("Generating garment image...");
+    // Generating garment image
     const step1Result = await cosxlClient.predict("/run_edit", [
       fabricBlob, // Image to edit
       prompt, // Prompt
