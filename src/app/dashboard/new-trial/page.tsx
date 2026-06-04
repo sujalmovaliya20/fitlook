@@ -16,6 +16,8 @@ const GARMENTS = [
   { id: "mens-kurta", name: "Men's Kurta", hindi: "Kurta" },
   { id: "mens-sherwani", name: "Sherwani", hindi: "Sherwani" },
   { id: "mens-suit", name: "Tailored Suit", hindi: "Suit" },
+  { id: "mens-full-sleeve-shirt", name: "Full Sleeve Shirt", hindi: "Shirt" },
+  { id: "mens-half-sleeve-shirt", name: "Half Sleeve Shirt", hindi: "Shirt" },
   { id: "womens-saree", name: "Saree", hindi: "Saree" },
   { id: "womens-lehenga", name: "Lehenga Choli", hindi: "Lehenga" },
   { id: "womens-salwar", name: "Salwar Kameez", hindi: "Salwar" },

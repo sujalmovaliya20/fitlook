@@ -117,7 +117,8 @@ export function TailorInterior({ progress }: { progress: number }) {
       <Canvas
         shadows
         camera={{ position: [0, 1.5, 5], fov: 50 }}
-        gl={{ antialias: true, pixelRatio: typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 2) : 2 }}
+        gl={{ antialias: true }}
+        dpr={typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 2) : 2}
       >
         <Scene progress={progress} />
       </Canvas>

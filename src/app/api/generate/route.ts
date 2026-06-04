@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       .update({ status: "processing" })
       .eq("id", trialId);
 
-    // 2. Fetch images as Blobs for Gradio
+    // 2. Fetch images as Blobs
     const humanImgResponse = await fetch(customerImageUrl);
     if (!humanImgResponse.ok) throw new Error("Failed to download human image");
     const humanBlob = await humanImgResponse.blob();
@@ -30,18 +30,54 @@ export async function POST(req: Request) {
     const garmImgResponse = await fetch(fabricImageUrl);
     if (!garmImgResponse.ok) throw new Error("Failed to download garment image");
     const garmBlob = await garmImgResponse.blob();
+    const garmArrayBuffer = await garmBlob.arrayBuffer();
+    const fabricBase64 = Buffer.from(garmArrayBuffer).toString("base64");
 
-    // 3. Connect to Hugging Face Free Space
+    // 3. STEP 1: Fabric -> Garment using Hugging Face (CosXL Edit via Gradio)
+    console.log("Connecting to Hugging Face CosXL for Step 1...");
     const { Client } = await import("@gradio/client");
-    const client = await Client.connect("yisol/IDM-VTON", {
-      token: process.env.HUGGINGFACE_API_TOKEN as any // Using the HF token they pasted here
+    const hfToken = process.env.HUGGINGFACE_API_TOKEN;
+
+    const cosxlClient = await Client.connect("multimodalart/cosxl", {
+      token: hfToken as any
     });
 
-    // 4. Call the free Gradio API
-    const result = await client.predict("/tryon", [
+    const formattedGarmentType = garmentType.replace(/-/g, ' ');
+    const prompt = `Shape it into a ${formattedGarmentType}`;
+    const negativePrompt = "blurry, low quality, distorted, bad proportions, watermark, hands, people, solid color, plain color";
+
+    const fabricBlob = new Blob([Buffer.from(fabricBase64, "base64")], { type: "image/png" });
+
+    console.log("Generating garment image...");
+    const step1Result = await cosxlClient.predict("/run_edit", [
+      fabricBlob, // Image to edit
+      prompt, // Prompt
+      negativePrompt, // Negative Prompt
+      7, // Guidance Scale
+      20, // Steps
+    ]);
+
+    const step1Data = step1Result.data as any[];
+    const generatedGarmentUrl = step1Data && step1Data[0] ? step1Data[0].url : null;
+
+    if (!generatedGarmentUrl) {
+      throw new Error("No output URL returned from CosXL Edit");
+    }
+
+    const step1ImgResponse = await fetch(generatedGarmentUrl);
+    if (!step1ImgResponse.ok) throw new Error("Failed to download generated garment from CosXL");
+    const generatedGarmentArrayBuffer = await step1ImgResponse.arrayBuffer();
+    const generatedGarmentBlob = new Blob([generatedGarmentArrayBuffer], { type: "image/png" });
+
+    // 4. STEP 2: Hugging Face IDM-VTON
+    const idmClient = await Client.connect("yisol/IDM-VTON", {
+      token: process.env.HUGGINGFACE_API_TOKEN as any
+    });
+
+    const result = await idmClient.predict("/tryon", [
       { background: humanBlob, layers: [], composite: null }, // Human image for auto-masking
-      garmBlob, // Garment image
-      `${garmentType} made from this fabric`, // Garment description
+      generatedGarmentBlob, // Use the generated garment instead of the raw fabric!
+      `${formattedGarmentType} made from the fabric`, 
       true, // is_checked (use auto masking)
       true, // is_checked_crop (auto crop)
       30, // denoise_steps
@@ -85,7 +121,6 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("Generate error:", error);
     if (trialId) {
-      // Safely mark the trial as failed so the frontend stops polling!
       await supabase.from("trials").update({ status: "failed" }).eq("id", trialId);
     }
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
