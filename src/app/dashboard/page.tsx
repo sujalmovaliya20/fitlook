@@ -80,7 +80,7 @@ export default async function DashboardHome() {
       </div>
 
       {/* STATS ROW */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <FabricCard className="border-l-[3px] border-l-[var(--thread-gold)] pl-5 flex flex-col gap-3">
           <ChalkLabel>Trials Today</ChalkLabel>
           <MeasurementBadge value={todayCount} size="lg" />

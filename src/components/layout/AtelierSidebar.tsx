@@ -26,7 +26,7 @@ export function AtelierSidebar() {
   ];
 
   return (
-    <aside className="fixed inset-y-0 left-0 w-[240px] bg-[var(--bg-parchment)] border-r border-[var(--stitch)] flex flex-col z-40">
+    <aside className="fixed inset-y-0 left-0 w-[240px] bg-[var(--bg-parchment)] border-r border-[var(--stitch)] hidden md:flex flex-col z-40">
       <div className="p-6">
         <h1 className="text-[clamp(16px,4vw,20px)] font-[family-name:var(--font-serif)] italic text-[var(--ink-dark)] mb-1">
           FitLook
