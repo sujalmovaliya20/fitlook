@@ -4,11 +4,12 @@ import { useState, useRef, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, Menu, X, Home, PlusCircle, History, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function AtelierTopbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
   const router = useRouter();
@@ -28,13 +29,25 @@ export function AtelierTopbar() {
     router.push("/");
   };
 
+  const navItems = [
+    { label: 'Home', href: '/dashboard', icon: Home },
+    { label: 'New Trial', href: '/dashboard/new-trial', icon: PlusCircle },
+    { label: 'History', href: '/dashboard/history', icon: History },
+    { label: 'Profile', href: '/dashboard/profile', icon: User },
+    { label: 'Settings', href: '/dashboard/settings', icon: Settings },
+  ];
+
   return (
-    <header className="h-[64px] bg-[var(--bg-warm-white)] border-b border-[var(--stitch)] flex items-center justify-between px-4 md:px-6 z-30 sticky top-0">
-      <div className="flex items-center">
-        <h2 className="text-lg md:text-2xl font-[family-name:var(--font-serif)] text-[var(--ink-dark)] truncate max-w-[200px] sm:max-w-none">
-          Studio Overview
-        </h2>
-      </div>
+    <>
+      <header className="h-[64px] bg-[var(--bg-warm-white)] border-b border-[var(--stitch)] flex items-center justify-between px-4 md:px-6 z-30 sticky top-0">
+        <div className="flex items-center gap-4">
+          <button onClick={() => setIsSidebarOpen(true)} className="text-[var(--ink-dark)] hover:text-[var(--thread-gold)] transition-colors focus:outline-none">
+            <Menu className="w-6 h-6" />
+          </button>
+          <h2 className="text-lg md:text-2xl font-[family-name:var(--font-serif)] text-[var(--ink-dark)] truncate max-w-[200px] sm:max-w-none">
+            Studio Overview
+          </h2>
+        </div>
 
       <div className="flex items-center gap-4 relative" ref={dropdownRef}>
         <button 
@@ -66,5 +79,58 @@ export function AtelierTopbar() {
         )}
       </div>
     </header>
+
+    {/* Slide-in Sidebar */}
+    {isSidebarOpen && (
+      <div className="fixed inset-0 z-[100] flex">
+        {/* Backdrop */}
+        <div 
+          className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+        
+        {/* Sidebar Panel */}
+        <div className="relative w-[260px] h-full bg-[var(--bg-parchment)] border-r border-[var(--stitch)] flex flex-col shadow-2xl animate-in slide-in-from-left duration-300">
+          <div className="flex items-center justify-between p-6 border-b border-[var(--stitch)]">
+            <div>
+              <h1 className="text-[clamp(16px,4vw,20px)] font-[family-name:var(--font-serif)] italic text-[var(--ink-dark)]">
+                FitLook
+              </h1>
+              <p className="text-[10px] font-[family-name:var(--font-sans)] font-light text-[var(--ink-light)] uppercase tracking-[0.1em] mt-1">
+                Navigation
+              </p>
+            </div>
+            <button onClick={() => setIsSidebarOpen(false)} className="text-[var(--ink-mid)] hover:text-[var(--ink-dark)] transition-colors">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          
+          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsSidebarOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 rounded-[6px] text-[14px] font-[family-name:var(--font-sans)] text-[var(--ink-mid)] hover:bg-[var(--bg-surface)] hover:text-[var(--ink-dark)] hover:shadow-sm transition-all border border-transparent hover:border-[var(--stitch)]"
+              >
+                <item.icon className="w-[18px] h-[18px] text-[var(--thread-gold)] opacity-80" />
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="p-6 border-t border-[var(--stitch)]">
+            <button 
+              onClick={handleLogout}
+              className="w-full flex items-center gap-3 px-4 py-3 text-[14px] font-[family-name:var(--font-sans)] text-[var(--fabric-red)] hover:bg-[rgba(139,26,26,0.05)] rounded-[6px] transition-colors border border-transparent hover:border-[rgba(139,26,26,0.1)]"
+            >
+              <LogOut className="w-[18px] h-[18px]" />
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
