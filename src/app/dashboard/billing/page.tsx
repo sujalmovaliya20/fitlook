@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
-import Script from "next/script";
-import { cn } from "@/lib/utils";
 
 import { FabricCard } from "@/components/tailor/FabricCard";
 import { ChalkLabel } from "@/components/tailor/ChalkLabel";
 import { MeasureDivider } from "@/components/tailor/MeasureDivider";
 import { ThreadButton } from "@/components/tailor/ThreadButton";
+import { PaymentButton } from "@/components/PaymentButton";
 
 type ShopData = {
   id: string;
@@ -27,8 +26,6 @@ export default function BillingPage() {
   const supabase = createClient();
   const [shop, setShop] = useState<ShopData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [processingPlan, setProcessingPlan] = useState<string | null>(null);
-  const [successPlan, setSuccessPlan] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -49,51 +46,7 @@ export default function BillingPage() {
     loadBillingData();
   }, [supabase]);
 
-  const handleUpgrade = async (planId: "basic" | "pro") => {
-    if (!shop) return;
-    setProcessingPlan(planId);
 
-    try {
-      const res = await fetch("/api/razorpay/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId }),
-      });
-      
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_mock",
-        amount: data.amount,
-        currency: data.currency,
-        name: "FitLook",
-        description: `Upgrade to ${planId.toUpperCase()} Plan`,
-        order_id: data.orderId,
-        handler: function (response: any) {
-          setSuccessPlan(PLANS[planId].name);
-        },
-        prefill: {
-          name: "Shop Owner",
-          email: "owner@example.com",
-        },
-        theme: {
-          color: "#C9A84C",
-        },
-      };
-
-      const rzp = new (window as any).Razorpay(options);
-      rzp.on("payment.failed", function (response: any) {
-        alert(`Payment Failed: ${response.error.description}`);
-      });
-      rzp.open();
-
-    } catch (error: any) {
-      alert("Failed to initiate payment: " + error.message);
-    } finally {
-      setProcessingPlan(null);
-    }
-  };
 
   if (loading) {
     return (
@@ -115,22 +68,6 @@ export default function BillingPage() {
 
   return (
     <>
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-      
-      {/* SUCCESS MODAL */}
-      {successPlan && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--bg-parchment)]/80 backdrop-blur-sm px-6">
-          <FabricCard className="w-full max-w-full max-w-[400px] text-center py-6 md:py-10 px-4 lg:px-8 shadow-2xl">
-            <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(18px,4.5vw,24px)] text-[var(--ink-dark)] mb-2">Welcome to {successPlan}</h2>
-            <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] mb-8">
-              Your atelier has been upgraded successfully. The new limits are now active.
-            </p>
-            <ThreadButton className="w-full" onClick={() => window.location.reload()}>
-              Return to your atelier
-            </ThreadButton>
-          </FabricCard>
-        </div>
-      )}
 
       <div className="max-w-5xl mx-auto space-y-12 pb-12 mt-4">
         
@@ -257,14 +194,7 @@ export default function BillingPage() {
                       Current Plan
                     </ThreadButton>
                   ) : (
-                    <ThreadButton 
-                      className="w-full"
-                      onClick={() => handleUpgrade("basic")}
-                      isLoading={processingPlan === "basic"}
-                      disabled={processingPlan !== null || currentPlanId === "pro"}
-                    >
-                      Upgrade to Basic
-                    </ThreadButton>
+                    <PaymentButton planId="basic" planName="Growing Atelier" displayAmount={499} />
                   )}
                 </div>
               </FabricCard>
@@ -299,18 +229,12 @@ export default function BillingPage() {
               
               <div className="mt-auto">
                 <MeasureDivider className="mb-6" />
-                {currentPlanId === "pro" ? (
+                  {currentPlanId === "pro" ? (
                   <ThreadButton variant="ghost" className="w-full opacity-50 cursor-default" disabled>
                     Current Plan
                   </ThreadButton>
                 ) : (
-                  <button 
-                    onClick={() => handleUpgrade("pro")}
-                    disabled={processingPlan !== null}
-                    className="w-full h-[46px] rounded-[6px] bg-[var(--fabric-teal)] hover:bg-[#1a5555] text-[var(--bg-parchment)] font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] transition-colors disabled:opacity-50 flex items-center justify-center"
-                  >
-                    {processingPlan === "pro" ? "Processing..." : "Upgrade to Pro"}
-                  </button>
+                  <PaymentButton planId="pro" planName="Master Atelier" displayAmount={999} />
                 )}
               </div>
             </FabricCard>
