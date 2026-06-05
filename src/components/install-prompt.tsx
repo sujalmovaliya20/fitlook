@@ -42,7 +42,7 @@ export function InstallPrompt() {
   };
 
   if (!showPrompt) return null;
-
+  return (
     <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-8 md:w-96 bg-[var(--bg-card)] border border-[var(--accent-border)] shadow-2xl rounded-xl p-5 z-[100] flex items-center justify-between gap-4 animate-in slide-in-from-bottom-5">
       <div>
         <h4 className="font-[family-name:var(--font-heading)] font-semibold text-lg text-[var(--text-primary)]">Install FitLook</h4>
