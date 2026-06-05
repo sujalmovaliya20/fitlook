@@ -28,7 +28,11 @@ export function NavBar({ scrollProgress }: NavBarProps) {
       <div className="container mx-auto flex h-[76px] items-center justify-between px-6 md:px-4 md:px-4 lg:px-8 lg:px-12">
         {/* LOGO */}
         <div className="flex items-center gap-3">
-          <Scissors className="w-5 h-5 text-[#C9A84C]" strokeWidth={1.5} />
+          <img 
+            src="/logo.png" 
+            alt="FitLook Logo" 
+            className="w-8 h-8 md:w-10 md:h-10 object-cover rounded-sm shadow-[0_2px_8px_rgba(0,0,0,0.5)] border border-[#C9A84C]/40 bg-[#F7F3EC]" 
+          />
           <span 
             className="text-[clamp(20px,5vw,30px)] tracking-[0.1em] uppercase"
             style={{ color: logoColor, fontFamily: '"Cormorant Garamond", serif', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}
