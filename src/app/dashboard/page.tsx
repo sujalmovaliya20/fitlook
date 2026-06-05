@@ -10,6 +10,7 @@ export default async function DashboardHome() {
   let todayCount = 0;
   let monthCount = 0;
   let ownerName = "Shop Owner";
+  let city = "Add your city";
 
   if (user) {
     const today = new Date();
@@ -31,7 +32,7 @@ export default async function DashboardHome() {
 
     const { data: shopData } = await supabase
       .from("shops")
-      .select("owner_name")
+      .select("owner_name, city")
       .eq("id", user.id)
       .single();
 
@@ -39,6 +40,9 @@ export default async function DashboardHome() {
     if (!errMonth && cMonth !== null) monthCount = cMonth;
     if (shopData?.owner_name) {
       ownerName = shopData.owner_name.split(" ")[0]; // Get first name
+    }
+    if (shopData?.city) {
+      city = shopData.city;
     }
   }
 
@@ -63,7 +67,7 @@ export default async function DashboardHome() {
           {greeting}, {ownerName}.
         </h1>
         <p className="date-text">
-          {formattedDate} &nbsp;&mdash;&nbsp; Ahmedabad
+          {formattedDate} &nbsp;&mdash;&nbsp; {city}
         </p>
 
         {/* Decorative Needle & Thread */}

@@ -133,8 +133,9 @@ export default function ProfilePage() {
                 <label className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">City / Location</label>
                 <input 
                   name="city" 
-                  defaultValue={shop?.city || "Ahmedabad"} 
-                  className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
+                  defaultValue={shop?.city || ""} 
+                  placeholder="Enter your city"
+                  className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors placeholder:text-[var(--ink-faint)]"
                 />
               </div>
             </div>
