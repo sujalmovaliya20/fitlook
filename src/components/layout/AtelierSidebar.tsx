@@ -27,13 +27,16 @@ export function AtelierSidebar() {
 
   return (
     <aside className="fixed inset-y-0 left-0 w-[240px] bg-[var(--bg-parchment)] border-r border-[var(--stitch)] hidden md:flex flex-col z-40">
-      <div className="p-6">
-        <h1 className="brand-name mb-1">
-          FitLook
-        </h1>
-        <p className="brand-label">
-          Tailor Shop
-        </p>
+      <div className="p-6 flex gap-3 items-center">
+        <img src="/logo.png" alt="FitLook Logo" className="w-10 h-10 object-cover rounded-md shadow-sm border border-[var(--accent-border)] bg-[var(--bg-card)]" />
+        <div>
+          <h1 className="brand-name mb-1">
+            FitLook
+          </h1>
+          <p className="brand-label">
+            Tailor Shop
+          </p>
+        </div>
       </div>
 
       <nav className="flex-1 px-4 py-4 space-y-1">

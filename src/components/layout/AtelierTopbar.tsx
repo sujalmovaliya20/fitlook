@@ -92,13 +92,16 @@ export function AtelierTopbar() {
         {/* Sidebar Panel */}
         <div className="relative w-[260px] h-full bg-[var(--bg-parchment)] border-r border-[var(--stitch)] flex flex-col shadow-2xl animate-in slide-in-from-left duration-300">
           <div className="flex items-center justify-between p-6 border-b border-[var(--stitch)]">
-            <div>
-              <h1 className="brand-name">
-                FitLook
-              </h1>
-              <p className="brand-label mt-1">
-                Navigation
-              </p>
+            <div className="flex gap-3 items-center">
+              <img src="/logo.png" alt="FitLook Logo" className="w-10 h-10 object-cover rounded-md shadow-sm border border-[var(--accent-border)] bg-[var(--bg-card)]" />
+              <div>
+                <h1 className="brand-name">
+                  FitLook
+                </h1>
+                <p className="brand-label mt-1">
+                  Navigation
+                </p>
+              </div>
             </div>
             <button onClick={() => setIsSidebarOpen(false)} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
               <X className="w-5 h-5" />
