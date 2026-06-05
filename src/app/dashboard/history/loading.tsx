@@ -4,8 +4,8 @@ export default function HistoryLoading() {
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
       <div>
-        <h1 className="font-[family-name:var(--font-display)] text-[32px] font-medium text-[var(--text-primary)] mb-2">Trial History</h1>
-        <p className="text-[15px] text-[var(--text-secondary)] font-light">View and manage past customer virtual trials.</p>
+        <h1 className="font-[family-name:var(--font-display)] text-[clamp(20px,5vw,30px)] font-medium text-[var(--text-primary)] mb-2">Trial History</h1>
+        <p className="text-[clamp(14px,3vw,16px)] text-[var(--text-secondary)] font-light">View and manage past customer virtual trials.</p>
       </div>
 
       {/* Mock Filters */}

@@ -17,8 +17,8 @@ export default function AuthLayout({
       
       {/* PAGE FOOTER */}
       <div className="relative z-10 mt-8 text-center flex flex-col items-center gap-1">
-        <span className="font-[family-name:var(--font-serif)] italic text-[#E8DCC8] text-[14px]">FitLook</span>
-        <span className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[#E8DCC8]/70">Crafted for Indian fabric artisans</span>
+        <span className="font-[family-name:var(--font-serif)] italic text-[#E8DCC8] text-[clamp(12px,2.5vw,14px)]">FitLook</span>
+        <span className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[#E8DCC8]/70">Crafted for Indian fabric artisans</span>
       </div>
     </div>
   );

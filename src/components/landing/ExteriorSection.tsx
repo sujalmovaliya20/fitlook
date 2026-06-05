@@ -51,7 +51,7 @@ export function ExteriorSection({ progress }: ExteriorSectionProps) {
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.8)_100%)] z-20"></div>
 
       <div 
-        className="relative flex flex-col items-center justify-center w-[80vw] max-w-[600px] aspect-[4/5] md:aspect-[16/9]"
+        className="relative flex flex-col items-center justify-center w-[80vw] max-w-full max-w-[600px] aspect-[4/5] md:aspect-[16/9]"
         style={{
           transform: `scale(${scale}) translateY(${translateY}vh)`,
           transformOrigin: 'center 60%', // Zoom towards the door in the image
@@ -59,7 +59,7 @@ export function ExteriorSection({ progress }: ExteriorSectionProps) {
       >
         {/* Modern Stitched Tailor Shop Board */}
         <div className="absolute -top-20 text-center z-10 w-full flex justify-center">
-          <div className="relative bg-[#150E09] px-10 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.8)] border border-[#0F0A06]">
+          <div className="relative bg-[#150E09] px-4 lg:px-10 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.8)] border border-[#0F0A06]">
             {/* Stitched Inner Border */}
             <div className="absolute inset-0 border-[1.5px] border-dashed border-[#C9A84C]/60 m-[6px] pointer-events-none"></div>
             
@@ -70,7 +70,7 @@ export function ExteriorSection({ progress }: ExteriorSectionProps) {
               FitLook
             </h1>
             <p 
-              className="text-[#E8DCC8]/70 text-[10px] tracking-[0.4em] uppercase mt-2 font-light relative z-10"
+              className="text-[#E8DCC8]/70 text-[clamp(10px,2vw,12px)] tracking-[0.4em] uppercase mt-2 font-light relative z-10"
               style={{ fontFamily: '"DM Sans", sans-serif' }}
             >
               Tailor Shop
@@ -94,7 +94,7 @@ export function ExteriorSection({ progress }: ExteriorSectionProps) {
       {/* Down arrow */}
       <div 
         className="absolute bottom-12 flex flex-col items-center bounce-arrow z-30"
-        style={{ fontFamily: '"Caveat", cursive', color: '#E8DCC8', fontSize: '24px', textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
+        style={{ fontFamily: '"Caveat", cursive', color: '#E8DCC8', fontSize: 'clamp(18px,4.5vw,24px)', textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
       >
         <span className="mb-2">Enter the shop</span>
         <span>↓</span>

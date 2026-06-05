@@ -161,15 +161,15 @@ export default function NewTrialPage() {
           </svg>
         </div>
 
-        <h2 className="font-[family-name:var(--font-serif)] italic font-normal text-[24px] text-[var(--ink-dark)] mb-3">
+        <h2 className="font-[family-name:var(--font-serif)] italic font-normal text-[clamp(18px,4.5vw,24px)] text-[var(--ink-dark)] mb-3">
           Stitching your look…
         </h2>
         
-        <div className="h-6 mb-12 overflow-hidden relative w-full max-w-[300px]">
+        <div className="h-6 mb-12 overflow-hidden relative w-full max-w-full max-w-[300px]">
           {loadingTexts.map((text, i) => (
             <p 
               key={i} 
-              className="font-[family-name:var(--font-sans)] font-light text-[14px] text-[var(--ink-mid)] absolute inset-0 text-center transition-all duration-500"
+              className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] absolute inset-0 text-center transition-all duration-500"
               style={{
                 opacity: i === loadingTextIndex ? 1 : 0,
                 transform: `translateY(${i === loadingTextIndex ? '0' : i < loadingTextIndex ? '-10px' : '10px'})`
@@ -192,7 +192,7 @@ export default function NewTrialPage() {
   }
 
   return (
-    <div className="max-w-[540px] mx-auto pb-24 mt-4">
+    <div className="max-w-full max-w-[540px] mx-auto pb-12 md:pb-24 mt-4">
       {/* STEPPER */}
       <div className="w-full flex items-center relative mb-12 px-6">
         <div className="absolute left-6 right-6 h-[1px] bg-[var(--stitch)] top-[4px] z-0" />
@@ -213,7 +213,7 @@ export default function NewTrialPage() {
                   isComplete ? "bg-[var(--ink-dark)] border-[var(--ink-dark)]" : 
                   "bg-[var(--bg-parchment)] border-[var(--stitch-strong)]"
                 )}>
-                   {isComplete && <span className="text-[var(--bg-parchment)] text-[6px] -rotate-45 block leading-none font-bold">✓</span>}
+                   {isComplete && <span className="text-[var(--bg-parchment)] text-[clamp(10px,2vw,12px)] -rotate-45 block leading-none font-bold">✓</span>}
                 </div>
                 <ChalkLabel className={cn(isActive ? "text-[var(--ink-dark)] font-normal" : "opacity-60")}>
                   {label}
@@ -229,8 +229,8 @@ export default function NewTrialPage() {
         {currentStep === 1 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-              <h2 className="font-[family-name:var(--font-serif)] italic text-[22px] text-[var(--ink-dark)] mb-1">Show us the fabric</h2>
-              <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)]">Photograph the cloth your customer has chosen.</p>
+              <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(16px,4vw,20px)] text-[var(--ink-dark)] mb-1">Show us the fabric</h2>
+              <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">Photograph the cloth your customer has chosen.</p>
             </div>
 
             <label className={cn(
@@ -241,9 +241,9 @@ export default function NewTrialPage() {
               
               {fabricPreview ? (
                 <>
-                  <img src={fabricPreview} className="absolute inset-0 w-full h-full object-contain p-2" alt="Fabric" />
-                  <div className="absolute top-3 right-3 bg-[var(--ink-dark)] text-[var(--bg-parchment)] px-3 py-1 rounded-full font-[family-name:var(--font-sans)] font-light text-[11px] shadow-sm flex items-center gap-1.5 z-10">
-                    <span className="text-[8px]">✓</span> Fabric captured
+                  <img src={fabricPreview} className="absolute inset-0 w-full h-full object-contain p-2 max-w-full h-auto" alt="Fabric" />
+                  <div className="absolute top-3 right-3 bg-[var(--ink-dark)] text-[var(--bg-parchment)] px-3 py-1 rounded-full font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] shadow-sm flex items-center gap-1.5 z-10">
+                    <span className="text-[clamp(10px,2vw,12px)]">✓</span> Fabric captured
                   </div>
                 </>
               ) : (
@@ -252,8 +252,8 @@ export default function NewTrialPage() {
                     <div className="absolute inset-0 bg-[var(--fabric-teal)] border border-[var(--stitch)] transform -rotate-6 shadow-sm rounded-[2px]"></div>
                     <div className="absolute inset-0 bg-[var(--thread-saffron)] border border-[var(--stitch)] transform rotate-6 opacity-90 shadow-sm rounded-[2px]"></div>
                   </div>
-                  <p className="font-[family-name:var(--font-serif)] text-[16px] text-[var(--ink-mid)] mt-3">Tap to photograph fabric</p>
-                  <p className="font-[family-name:var(--font-sans)] font-light text-[12px] text-[var(--ink-faint)]">JPG or PNG · Clear, flat lay preferred</p>
+                  <p className="font-[family-name:var(--font-serif)] text-[clamp(14px,3vw,16px)] text-[var(--ink-mid)] mt-3">Tap to photograph fabric</p>
+                  <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">JPG or PNG · Clear, flat lay preferred</p>
                 </div>
               )}
             </label>
@@ -264,8 +264,8 @@ export default function NewTrialPage() {
         {currentStep === 2 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-              <h2 className="font-[family-name:var(--font-serif)] italic text-[22px] text-[var(--ink-dark)] mb-1">Photograph the customer</h2>
-              <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)]">We need a full-body photo to map the fabric accurately.</p>
+              <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(16px,4vw,20px)] text-[var(--ink-dark)] mb-1">Photograph the customer</h2>
+              <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">We need a full-body photo to map the fabric accurately.</p>
             </div>
 
             <label className={cn(
@@ -276,9 +276,9 @@ export default function NewTrialPage() {
               
               {customerPreview ? (
                 <>
-                  <img src={customerPreview} className="absolute inset-0 w-full h-full object-contain p-2" alt="Customer" />
-                  <div className="absolute top-3 right-3 bg-[var(--ink-dark)] text-[var(--bg-parchment)] px-3 py-1 rounded-full font-[family-name:var(--font-sans)] font-light text-[11px] shadow-sm flex items-center gap-1.5 z-10">
-                    <span className="text-[8px]">✓</span> Customer captured
+                  <img src={customerPreview} className="absolute inset-0 w-full h-full object-contain p-2 max-w-full h-auto" alt="Customer" />
+                  <div className="absolute top-3 right-3 bg-[var(--ink-dark)] text-[var(--bg-parchment)] px-3 py-1 rounded-full font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] shadow-sm flex items-center gap-1.5 z-10">
+                    <span className="text-[clamp(10px,2vw,12px)]">✓</span> Customer captured
                   </div>
                 </>
               ) : (
@@ -289,15 +289,15 @@ export default function NewTrialPage() {
                       <path d="M5 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2" />
                     </svg>
                   </div>
-                  <p className="font-[family-name:var(--font-serif)] text-[16px] text-[var(--ink-mid)] mt-1">Tap to photograph customer</p>
-                  <p className="font-[family-name:var(--font-sans)] font-light text-[12px] text-[var(--ink-faint)]">Front-facing, full height</p>
+                  <p className="font-[family-name:var(--font-serif)] text-[clamp(14px,3vw,16px)] text-[var(--ink-mid)] mt-1">Tap to photograph customer</p>
+                  <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">Front-facing, full height</p>
                 </div>
               )}
             </label>
 
             <FabricCard className="border-l-[3px] border-l-[var(--fabric-teal)] pl-5 py-4">
               <ChalkLabel className="mb-1 text-[var(--fabric-teal)]">Tailor's Tip</ChalkLabel>
-              <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] leading-relaxed">
+              <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] leading-relaxed">
                 Stand the customer straight, arms slightly apart. Full height in frame. Plain wall behind them.
               </p>
             </FabricCard>
@@ -308,8 +308,8 @@ export default function NewTrialPage() {
         {currentStep === 3 && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-              <h2 className="font-[family-name:var(--font-serif)] italic text-[22px] text-[var(--ink-dark)] mb-1">Choose the cut</h2>
-              <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)]">Select the style of garment to be tailored.</p>
+              <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(16px,4vw,20px)] text-[var(--ink-dark)] mb-1">Choose the cut</h2>
+              <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">Select the style of garment to be tailored.</p>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -327,9 +327,9 @@ export default function NewTrialPage() {
                         : "border-[var(--stitch)] border-l-[3px] border-l-[var(--fabric-cream)]"
                     )}
                   >
-                    <ChalkLabel className="mb-2 !text-[9px]">Garment</ChalkLabel>
-                    <p className="font-[family-name:var(--font-serif)] text-[15px] text-[var(--ink-dark)] leading-tight mb-1">{garment.name}</p>
-                    <p className="font-[family-name:var(--font-sans)] italic font-light text-[12px] text-[var(--ink-light)]">{garment.hindi}</p>
+                    <ChalkLabel className="mb-2 !text-[clamp(10px,2vw,12px)]">Garment</ChalkLabel>
+                    <p className="font-[family-name:var(--font-serif)] text-[clamp(14px,3vw,16px)] text-[var(--ink-dark)] leading-tight mb-1">{garment.name}</p>
+                    <p className="font-[family-name:var(--font-sans)] italic font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-light)]">{garment.hindi}</p>
                     
                     {isSelected && (
                       <div className="absolute top-3 right-3 text-[var(--thread-gold)]">
@@ -351,7 +351,7 @@ export default function NewTrialPage() {
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
                   placeholder="e.g. Rohan Sharma"
-                  className="w-full h-[46px] px-[14px] bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200"
+                  className="w-full h-[46px] px-[14px] bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200"
                 />
               </div>
 
@@ -362,7 +362,7 @@ export default function NewTrialPage() {
                   value={fabricType}
                   onChange={(e) => setFabricType(e.target.value)}
                   placeholder="Cotton, Silk, Linen…"
-                  className="w-full h-[46px] px-[14px] bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200"
+                  className="w-full h-[46px] px-[14px] bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200"
                 />
               </div>
 
@@ -373,7 +373,7 @@ export default function NewTrialPage() {
                   onChange={(e) => setInstructions(e.target.value)}
                   placeholder="Slim fit, mandarin collar, 3 buttons…"
                   rows={3}
-                  className="w-full p-[14px] bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200 resize-none"
+                  className="w-full p-[14px] bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200 resize-none"
                 />
               </div>
             </div>
@@ -384,46 +384,46 @@ export default function NewTrialPage() {
         {currentStep === 4 && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-              <h2 className="font-[family-name:var(--font-serif)] italic text-[22px] text-[var(--ink-dark)] mb-1">Ready to stitch</h2>
-              <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)]">Review the details on the order chit.</p>
+              <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(16px,4vw,20px)] text-[var(--ink-dark)] mb-1">Ready to stitch</h2>
+              <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">Review the details on the order chit.</p>
             </div>
 
             <FabricCard className="border-l-[4px] border-l-[var(--ink-dark)] p-0 overflow-hidden">
               <div className="p-6 space-y-4">
                 <div className="grid grid-cols-[120px_1fr] gap-4">
                   <ChalkLabel>Garment</ChalkLabel>
-                  <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)]">{GARMENTS.find(g => g.id === garmentType)?.name || "Not selected"}</p>
+                  <p className="font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)]">{GARMENTS.find(g => g.id === garmentType)?.name || "Not selected"}</p>
                 </div>
                 
                 <div className="grid grid-cols-[120px_1fr] gap-4">
                   <ChalkLabel>Customer</ChalkLabel>
-                  <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)]">{customerName || "Walk-in Customer"}</p>
+                  <p className="font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)]">{customerName || "Walk-in Customer"}</p>
                 </div>
 
                 <div className="grid grid-cols-[120px_1fr] gap-4">
                   <ChalkLabel>Fabric Type</ChalkLabel>
-                  <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)]">{fabricType || "Not specified"}</p>
+                  <p className="font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)]">{fabricType || "Not specified"}</p>
                 </div>
 
                 {instructions && (
                   <div className="grid grid-cols-[120px_1fr] gap-4">
                     <ChalkLabel>Style Notes</ChalkLabel>
-                    <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] italic opacity-80">{instructions}</p>
+                    <p className="font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] italic opacity-80">{instructions}</p>
                   </div>
                 )}
               </div>
               
               <div className="px-6 py-2">
                 <MeasureDivider />
-                <p className="font-[family-name:var(--font-mono)] text-[11px] text-[var(--ink-faint)] text-center pb-4 pt-2">Order #{Date.now().toString().slice(-6)}</p>
+                <p className="font-[family-name:var(--font-mono)] text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)] text-center pb-4 pt-2">Order #{Date.now().toString().slice(-6)}</p>
               </div>
             </FabricCard>
 
             <div className="pt-2 flex flex-col gap-3">
-              <ThreadButton onClick={handleGenerate} className="w-full h-[52px] text-[15px]">
+              <ThreadButton onClick={handleGenerate} className="w-full h-[52px] text-[clamp(14px,3vw,16px)]">
                 Begin the stitch &rarr;
               </ThreadButton>
-              <p className="text-center font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-faint)]">
+              <p className="text-center font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">
                 AI will generate a preview in 20–40 seconds
               </p>
             </div>
@@ -437,7 +437,7 @@ export default function NewTrialPage() {
           <button 
             onClick={() => setCurrentStep(prev => prev - 1)}
             disabled={currentStep === 1}
-            className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-mid)] disabled:opacity-0 hover:text-[var(--ink-dark)] transition-colors"
+            className="font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] disabled:opacity-0 hover:text-[var(--ink-dark)] transition-colors"
           >
             &larr; Back
           </button>

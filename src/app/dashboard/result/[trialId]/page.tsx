@@ -160,7 +160,7 @@ export default function ResultPage() {
         <div className="w-16 h-16 bg-[rgba(139,26,26,0.08)] text-[var(--fabric-red)] border border-[var(--fabric-red)]/20 rounded-full flex items-center justify-center text-xl mb-2">
           ✗
         </div>
-        <h2 className="text-[32px] font-[family-name:var(--font-serif)] italic text-[var(--ink-dark)]">The stitch failed</h2>
+        <h2 className="text-[clamp(20px,5vw,30px)] font-[family-name:var(--font-serif)] italic text-[var(--ink-dark)]">The stitch failed</h2>
         <p className="font-[family-name:var(--font-sans)] text-[var(--ink-mid)] font-light">The AI model couldn't process this fabric and customer combination.</p>
         <Link href="/dashboard/new-trial">
           <ThreadButton>Try Again &rarr;</ThreadButton>
@@ -197,7 +197,7 @@ export default function ResultPage() {
       <canvas ref={canvasRef} className="hidden" />
 
       {/* LEFT COLUMN: THE FITTING MIRROR */}
-      <div className="w-full md:w-[60%] h-[50vh] md:h-screen flex flex-col items-center justify-center p-8 animate-fade-in relative">
+      <div className="w-full md:w-[60%] h-[50vh] md:h-screen flex flex-col items-center justify-center p-4 md:p-6 lg:p-8 animate-fade-in relative">
         <div className="relative inline-block">
           {/* Frame Corners (Ornaments) */}
           <div className="absolute -top-[12px] -left-[12px] w-[24px] h-[24px] border-t-[3px] border-l-[3px] border-[var(--thread-gold)] corner-ornament corner-tl z-20" />
@@ -218,10 +218,10 @@ export default function ResultPage() {
         
         {/* Mirror Sub-label */}
         <div className="mt-8 text-center max-w-sm">
-          <h2 className="font-[family-name:var(--font-serif)] italic text-[18px] text-[var(--bg-parchment)] tracking-wide mb-2">
+          <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(15px,3.5vw,18px)] text-[var(--bg-parchment)] tracking-wide mb-2">
             {trial?.customer_name || "Customer"}
           </h2>
-          <div className="font-[family-name:var(--font-sans)] font-normal text-[11px] text-[rgba(245,240,238,0.5)] uppercase tracking-[0.2em] border border-[rgba(245,240,238,0.15)] px-4 py-1.5 rounded-full inline-block">
+          <div className="font-[family-name:var(--font-sans)] font-normal text-[clamp(10px,2vw,12px)] text-[rgba(245,240,238,0.5)] uppercase tracking-[0.2em] border border-[rgba(245,240,238,0.15)] px-4 py-1.5 rounded-full inline-block">
             {trial?.garment_type.replace(/-/g, ' ')} • {trial?.fabric_type || "Custom Fabric"}
           </div>
         </div>
@@ -229,10 +229,10 @@ export default function ResultPage() {
 
       {/* RIGHT COLUMN: THE TAILOR'S PRESENTATION */}
       <div className="w-full md:w-[40%] h-[50vh] md:h-screen bg-[var(--bg-parchment)] p-[40px_32px] md:p-[60px_48px] flex flex-col overflow-y-auto animate-slide-in shadow-[-10px_0_30px_rgba(0,0,0,0.15)] relative z-10">
-        <div className="max-w-[400px] w-full mx-auto flex flex-col h-full">
+        <div className="max-w-full max-w-[400px] w-full mx-auto flex flex-col h-full">
           
           <ChalkLabel className="mb-2">Trial Complete</ChalkLabel>
-          <h1 className="font-[family-name:var(--font-serif)] text-[28px] text-[var(--ink-dark)] mb-6">Your look is ready.</h1>
+          <h1 className="font-[family-name:var(--font-serif)] text-[clamp(20px,5vw,30px)] text-[var(--ink-dark)] mb-6">Your look is ready.</h1>
           
           <MeasureDivider className="mb-8" />
 
@@ -241,24 +241,24 @@ export default function ResultPage() {
             <div className="p-5 space-y-3">
               <div className="grid grid-cols-[100px_1fr] gap-4 items-baseline">
                 <ChalkLabel>Customer</ChalkLabel>
-                <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)]">{trial?.customer_name || "Walk-in"}</p>
+                <p className="font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)]">{trial?.customer_name || "Walk-in"}</p>
               </div>
               <div className="grid grid-cols-[100px_1fr] gap-4 items-baseline">
                 <ChalkLabel>Fabric Type</ChalkLabel>
-                <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)]">{trial?.fabric_type || "Unspecified"}</p>
+                <p className="font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)]">{trial?.fabric_type || "Unspecified"}</p>
               </div>
               <div className="grid grid-cols-[100px_1fr] gap-4 items-baseline">
                 <ChalkLabel>Garment</ChalkLabel>
-                <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] capitalize">{trial?.garment_type.replace(/-/g, ' ')}</p>
+                <p className="font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] capitalize">{trial?.garment_type.replace(/-/g, ' ')}</p>
               </div>
               <div className="grid grid-cols-[100px_1fr] gap-4 items-baseline">
                 <ChalkLabel>Date</ChalkLabel>
-                <p className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)]">{new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                <p className="font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)]">{new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
               </div>
             </div>
             <MeasureDivider />
             <div className="px-5 py-2">
-              <p className="font-[family-name:var(--font-mono)] font-light text-[11px] text-[var(--ink-faint)]">
+              <p className="font-[family-name:var(--font-mono)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">
                 Order #{trial?.id.substring(0,8).toUpperCase()}
               </p>
             </div>
@@ -283,7 +283,7 @@ export default function ResultPage() {
             </Link>
           </div>
 
-          <p className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-faint)] text-center mt-8">
+          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)] text-center mt-8">
             Powered by FitLook AI &nbsp;·&nbsp; fitlook.in
           </p>
         </div>

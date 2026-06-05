@@ -56,12 +56,12 @@ export function HistoryFilters() {
   return (
     <div className="flex flex-col sm:flex-row gap-6 items-center justify-between bg-[var(--bg-card)] p-4 rounded-[var(--radius-lg)] border border-[var(--border-subtle)]">
       {/* Search Bar */}
-      <div className="relative w-full sm:w-[320px] h-[48px]">
+      <div className="relative w-full sm:w-full max-w-[320px] h-[48px]">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--text-muted)]" />
         <input
           type="search"
           placeholder="Search by customer name..."
-          className="w-full h-full bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.08)] rounded-[10px] pl-12 pr-4 outline-none text-[15px] font-[family-name:var(--font-body)] font-normal text-[var(--text-primary)] transition-all duration-300 focus:border-[var(--accent-gold)] focus:shadow-[var(--glow-gold)]"
+          className="w-full h-full bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.08)] rounded-[10px] pl-12 pr-4 outline-none text-[clamp(14px,3vw,16px)] font-[family-name:var(--font-body)] font-normal text-[var(--text-primary)] transition-all duration-300 focus:border-[var(--accent-gold)] focus:shadow-[var(--glow-gold)]"
           value={searchQuery}
           onChange={handleSearchChange}
         />
@@ -74,7 +74,7 @@ export function HistoryFilters() {
             key={status.value}
             onClick={() => handleStatusChange(status.value)}
             className={cn(
-              "px-5 py-2.5 rounded-full text-[14px] font-medium transition-all duration-300 whitespace-nowrap",
+              "px-5 py-2.5 rounded-full text-[clamp(12px,2.5vw,14px)] font-medium transition-all duration-300 whitespace-nowrap",
               currentStatus === status.value
                 ? "bg-[rgba(201,168,76,0.15)] text-[var(--accent-gold)] shadow-[var(--glow-gold)]"
                 : "bg-[rgba(255,255,255,0.03)] text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.06)] hover:text-[var(--text-primary)] border border-[rgba(255,255,255,0.05)]"

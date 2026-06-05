@@ -52,8 +52,8 @@ export default function LoginPage() {
       </div>
 
       <div className="text-center w-full mb-8">
-        <p className="font-[family-name:var(--font-serif)] italic text-[13px] text-[var(--ink-light)] mb-2">Welcome back to FitLook</p>
-        <h1 className="font-[family-name:var(--font-serif)] text-[28px] text-[var(--ink-dark)] leading-tight">Sign in to your atelier</h1>
+        <p className="font-[family-name:var(--font-serif)] italic text-[clamp(12px,2.5vw,14px)] text-[var(--ink-light)] mb-2">Welcome back to FitLook</p>
+        <h1 className="font-[family-name:var(--font-serif)] text-[clamp(20px,5vw,30px)] text-[var(--ink-dark)] leading-tight">Sign in to your atelier</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
@@ -72,14 +72,14 @@ export default function LoginPage() {
             placeholder="master@atelier.com"
             required 
             disabled={isPending}
-            className="w-full h-[46px] px-[14px] bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200"
+            className="w-full h-[46px] px-[14px] bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200"
           />
         </div>
 
         <div className="flex flex-col gap-1.5">
           <div className="flex justify-between items-center">
             <ChalkLabel htmlFor="password">Password</ChalkLabel>
-            <Link href="#" className="font-[family-name:var(--font-sans)] text-[11px] text-[var(--ink-light)] hover:text-[var(--thread-gold)] transition-colors">Forgot?</Link>
+            <Link href="#" className="font-[family-name:var(--font-sans)] text-[clamp(10px,2vw,12px)] text-[var(--ink-light)] hover:text-[var(--thread-gold)] transition-colors">Forgot?</Link>
           </div>
           <div className="relative">
             <input 
@@ -89,7 +89,7 @@ export default function LoginPage() {
               placeholder="••••••••"
               required 
               disabled={isPending}
-              className="w-full h-[46px] pl-[14px] pr-[40px] bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200"
+              className="w-full h-[46px] pl-[14px] pr-[40px] bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200"
             />
             <button 
               type="button" 
@@ -108,7 +108,7 @@ export default function LoginPage() {
 
       <div className="w-full mt-8 flex flex-col items-center gap-6">
         <MeasureDivider />
-        <Link href="/auth/signup" className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] hover:text-[var(--thread-gold)] transition-colors">
+        <Link href="/auth/signup" className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] hover:text-[var(--thread-gold)] transition-colors">
           New to FitLook? Create your shop &rarr;
         </Link>
       </div>

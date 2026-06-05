@@ -4,6 +4,24 @@
 @tailwind components;
 @tailwind utilities;
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  min-width: 320px;
+}
+
+img, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

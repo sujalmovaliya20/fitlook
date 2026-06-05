@@ -9,7 +9,7 @@ export function ChalkLabel({ className, children, withDash = false, ...props }: 
   return (
     <label 
       className={cn(
-        "flex items-center text-[11px] uppercase tracking-[0.1em] text-[var(--ink-light)] font-[family-name:var(--font-sans)] font-light",
+        "flex items-center text-[clamp(10px,2vw,12px)] uppercase tracking-[0.1em] text-[var(--ink-light)] font-[family-name:var(--font-sans)] font-light",
         className
       )}
       {...props}

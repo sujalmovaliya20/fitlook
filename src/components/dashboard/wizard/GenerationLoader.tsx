@@ -137,7 +137,7 @@ export function GenerationLoader() {
           </motion.div>
         </div>
 
-        <h1 className="font-[family-name:var(--font-display)] font-light text-[48px] text-[var(--text-primary)] mb-4 tracking-wide text-center">
+        <h1 className="font-[family-name:var(--font-display)] font-light text-[clamp(24px,7vw,48px)] text-[var(--text-primary)] mb-4 tracking-wide text-center">
           Crafting your look...
         </h1>
 
@@ -149,7 +149,7 @@ export function GenerationLoader() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-[16px] text-[var(--text-secondary)] font-[family-name:var(--font-body)] text-center"
+              className="text-[clamp(14px,3vw,16px)] text-[var(--text-secondary)] font-[family-name:var(--font-body)] text-center"
             >
               {MESSAGES[messageIndex]}
             </motion.p>

@@ -11,7 +11,7 @@ export default function AppLayout({
       <AtelierSidebar />
       <div className="pl-[240px] flex flex-col min-h-screen">
         <AtelierTopbar />
-        <main className="flex-1 p-8">
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
           {children}
         </main>
       </div>

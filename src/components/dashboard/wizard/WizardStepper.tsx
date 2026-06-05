@@ -38,7 +38,7 @@ export function WizardStepper({ currentStep }: WizardStepperProps) {
                 )}
 
                 <motion.div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-bold z-10 transition-colors duration-300 ${
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-[clamp(12px,2.5vw,14px)] font-bold z-10 transition-colors duration-300 ${
                     isCompleted
                       ? "bg-[var(--accent-gold)] text-black"
                       : isActive
@@ -53,7 +53,7 @@ export function WizardStepper({ currentStep }: WizardStepperProps) {
               </div>
 
               <span
-                className={`mt-3 text-[12px] font-[family-name:var(--font-body)] transition-colors duration-300 ${
+                className={`mt-3 text-[clamp(10px,2vw,12px)] font-[family-name:var(--font-body)] transition-colors duration-300 ${
                   isActive ? "text-[var(--text-primary)] font-medium" : "text-[var(--text-secondary)]"
                 }`}
               >

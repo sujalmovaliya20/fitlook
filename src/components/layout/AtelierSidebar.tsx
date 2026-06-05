@@ -28,10 +28,10 @@ export function AtelierSidebar() {
   return (
     <aside className="fixed inset-y-0 left-0 w-[240px] bg-[var(--bg-parchment)] border-r border-[var(--stitch)] flex flex-col z-40">
       <div className="p-6">
-        <h1 className="text-[22px] font-[family-name:var(--font-serif)] italic text-[var(--ink-dark)] mb-1">
+        <h1 className="text-[clamp(16px,4vw,20px)] font-[family-name:var(--font-serif)] italic text-[var(--ink-dark)] mb-1">
           FitLook
         </h1>
-        <p className="text-[12px] font-[family-name:var(--font-sans)] font-light text-[var(--ink-light)] uppercase tracking-[0.1em]">
+        <p className="text-[clamp(10px,2vw,12px)] font-[family-name:var(--font-sans)] font-light text-[var(--ink-light)] uppercase tracking-[0.1em]">
           Tailor Shop
         </p>
       </div>
@@ -44,7 +44,7 @@ export function AtelierSidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-[4px] text-[13px] font-[family-name:var(--font-sans)] transition-colors",
+                "flex items-center gap-3 px-3 py-2.5 rounded-[4px] text-[clamp(12px,2.5vw,14px)] font-[family-name:var(--font-sans)] transition-colors",
                 isActive 
                   ? "bg-[var(--thread-muted)] text-[var(--ink-dark)] font-bold border-l-[2px] border-[var(--thread-gold)] rounded-l-none" 
                   : "text-[var(--ink-mid)] hover:bg-[var(--bg-surface)] hover:text-[var(--ink-dark)]"
@@ -60,7 +60,7 @@ export function AtelierSidebar() {
       <div className="px-4 mb-4">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-[4px] text-[13px] font-[family-name:var(--font-sans)] text-[var(--ink-mid)] hover:bg-[rgba(139,26,26,0.05)] hover:text-[var(--fabric-red)] transition-colors"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-[4px] text-[clamp(12px,2.5vw,14px)] font-[family-name:var(--font-sans)] text-[var(--ink-mid)] hover:bg-[rgba(139,26,26,0.05)] hover:text-[var(--fabric-red)] transition-colors"
         >
           <LogOut className="w-[16px] h-[16px]" />
           Logout
@@ -68,11 +68,11 @@ export function AtelierSidebar() {
       </div>
 
       <div className="p-6 pt-5 border-t border-[var(--stitch)] mt-auto">
-        <p className="text-[11px] uppercase tracking-[0.1em] text-[var(--ink-light)] mb-2">Generations Used</p>
+        <p className="text-[clamp(10px,2vw,12px)] uppercase tracking-[0.1em] text-[var(--ink-light)] mb-2">Generations Used</p>
         <div className="w-full h-[4px] bg-[var(--stitch)] rounded-full overflow-hidden">
           <div className="h-full bg-[var(--thread-gold)] w-[40%]"></div>
         </div>
-        <p className="text-[11px] font-[family-name:var(--font-mono)] text-[var(--ink-mid)] mt-1 text-right">400 / 1000</p>
+        <p className="text-[clamp(10px,2vw,12px)] font-[family-name:var(--font-mono)] text-[var(--ink-mid)] mt-1 text-right">400 / 1000</p>
       </div>
     </aside>
   );

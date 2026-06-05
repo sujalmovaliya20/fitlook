@@ -27,13 +27,13 @@ export function TopBar({ shopName }: TopBarProps) {
     .toUpperCase();
 
   return (
-    <header className="h-[64px] flex items-center justify-between px-6 lg:px-10 border-b border-[rgba(255,255,255,0.05)] bg-transparent">
+    <header className="h-[64px] flex items-center justify-between px-6 lg:px-4 lg:px-10 border-b border-[rgba(255,255,255,0.05)] bg-transparent">
       <div className="flex items-center gap-4">
         {/* Mobile Menu Toggle (Placeholder) */}
         <button className="md:hidden text-[var(--text-secondary)] hover:text-[var(--accent-gold)] transition-colors">
           <Menu className="w-6 h-6" />
         </button>
-        <h1 className="font-[family-name:var(--font-display)] font-medium text-[28px] text-[var(--text-primary)] tracking-wide">
+        <h1 className="font-[family-name:var(--font-display)] font-medium text-[clamp(20px,5vw,30px)] text-[var(--text-primary)] tracking-wide">
           {pageTitle}
         </h1>
       </div>
@@ -46,10 +46,10 @@ export function TopBar({ shopName }: TopBarProps) {
         
         <div className="flex items-center gap-3">
           <div className="hidden sm:flex flex-col items-end">
-            <span className="text-[13px] font-medium text-[var(--text-primary)]">{shopName}</span>
-            <span className="text-[11px] text-[var(--text-secondary)]">Pro Plan</span>
+            <span className="text-[clamp(12px,2.5vw,14px)] font-medium text-[var(--text-primary)]">{shopName}</span>
+            <span className="text-[clamp(10px,2vw,12px)] text-[var(--text-secondary)]">Pro Plan</span>
           </div>
-          <div className="w-10 h-10 rounded-full bg-[var(--accent-gold)] text-[#0A0A0F] flex items-center justify-center font-bold text-[14px] shadow-[var(--glow-gold)]">
+          <div className="w-10 h-10 rounded-full bg-[var(--accent-gold)] text-[#0A0A0F] flex items-center justify-center font-bold text-[clamp(12px,2.5vw,14px)] shadow-[var(--glow-gold)]">
             {initials || "FL"}
           </div>
         </div>

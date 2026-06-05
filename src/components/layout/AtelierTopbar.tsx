@@ -29,9 +29,9 @@ export function AtelierTopbar() {
   };
 
   return (
-    <header className="h-[56px] bg-[var(--bg-warm-white)] border-b border-[var(--stitch)] flex items-center justify-between px-8 z-30 sticky top-0">
+    <header className="h-[56px] bg-[var(--bg-warm-white)] border-b border-[var(--stitch)] flex items-center justify-between px-4 lg:px-8 z-30 sticky top-0">
       <div className="flex items-center">
-        <h2 className="text-[20px] font-[family-name:var(--font-serif)] text-[var(--ink-dark)]">
+        <h2 className="text-[clamp(16px,4vw,20px)] font-[family-name:var(--font-serif)] text-[var(--ink-dark)]">
           Studio Overview
         </h2>
       </div>
@@ -41,7 +41,7 @@ export function AtelierTopbar() {
           onClick={() => setIsOpen(!isOpen)}
           className="w-[32px] h-[32px] rounded-full bg-[url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100\\' height=\\'100\\'%3E%3Cfilter id=\\'n\\'%3E%3CfeTurbulence type=\\'fractalNoise\\' baseFrequency=\\'0.5\\' numOctaves=\\'3\\' stitchTiles=\\'stitch\\'/%3E%3C/filter%3E%3Crect width=\\'100\\' height=\\'100\\' filter=\\'url(%23n)\\' opacity=\\'0.1\\'/%3E%3C/svg%3E')] bg-[#F0EBE3] border border-[var(--stitch-strong)] flex items-center justify-center shadow-sm hover:border-[var(--thread-gold)] transition-colors focus:outline-none"
         >
-          <span className="text-[12px] font-[family-name:var(--font-sans)] text-[var(--thread-gold)] font-bold">SM</span>
+          <span className="text-[clamp(10px,2vw,12px)] font-[family-name:var(--font-sans)] text-[var(--thread-gold)] font-bold">SM</span>
         </button>
 
         {isOpen && (
@@ -49,7 +49,7 @@ export function AtelierTopbar() {
             <Link 
               href="/dashboard/profile" 
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-2 text-[13px] font-[family-name:var(--font-sans)] text-[var(--ink-dark)] hover:bg-[var(--bg-surface)] transition-colors"
+              className="flex items-center gap-3 px-4 py-2 text-[clamp(12px,2.5vw,14px)] font-[family-name:var(--font-sans)] text-[var(--ink-dark)] hover:bg-[var(--bg-surface)] transition-colors"
             >
               <User className="w-[14px] h-[14px] text-[var(--ink-mid)]" />
               Profile
@@ -57,7 +57,7 @@ export function AtelierTopbar() {
             <div className="h-[1px] bg-[var(--stitch)] my-1 w-full" />
             <button 
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-2 text-[13px] font-[family-name:var(--font-sans)] text-[var(--fabric-red)] hover:bg-[rgba(139,26,26,0.05)] transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-2 text-[clamp(12px,2.5vw,14px)] font-[family-name:var(--font-sans)] text-[var(--fabric-red)] hover:bg-[rgba(139,26,26,0.05)] transition-colors text-left"
             >
               <LogOut className="w-[14px] h-[14px]" />
               Logout

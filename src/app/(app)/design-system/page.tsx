@@ -6,7 +6,7 @@ import { ChalkLabel } from "@/components/tailor/ChalkLabel";
 
 export default function DesignSystemPage() {
   return (
-    <div className="max-w-4xl mx-auto space-y-12 pb-24">
+    <div className="max-w-4xl mx-auto space-y-12 pb-12 md:pb-24">
       <div>
         <h1 className="text-4xl font-[family-name:var(--font-serif)] italic text-[var(--ink-dark)] mb-2">Tailor's Atelier</h1>
         <p className="text-[var(--ink-light)] font-[family-name:var(--font-sans)]">Design System Components Overview</p>
@@ -16,7 +16,7 @@ export default function DesignSystemPage() {
 
       <section className="space-y-6">
         <h2 className="text-2xl font-[family-name:var(--font-serif)] text-[var(--ink-dark)]">Typography & Badges</h2>
-        <div className="grid grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-4 md:p-6 lg:p-8">
           <FabricCard className="flex flex-col gap-4 justify-center items-center">
             <ChalkLabel withDash>Sleeve Length</ChalkLabel>
             <MeasurementBadge value="24.5" unit="in" size="lg" />

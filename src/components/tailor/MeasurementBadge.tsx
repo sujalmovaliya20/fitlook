@@ -9,10 +9,10 @@ interface MeasurementBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 export function MeasurementBadge({ value, unit, size = 'md', className, ...props }: MeasurementBadgeProps) {
   const sizeClasses = {
-    sm: "text-[16px]",
-    md: "text-[24px]",
-    lg: "text-[36px]",
-    xl: "text-[48px]",
+    sm: "text-[clamp(14px,3vw,16px)]",
+    md: "text-[clamp(18px,4.5vw,24px)]",
+    lg: "text-[clamp(22px,6vw,36px)]",
+    xl: "text-[clamp(24px,7vw,48px)]",
   };
 
   return (

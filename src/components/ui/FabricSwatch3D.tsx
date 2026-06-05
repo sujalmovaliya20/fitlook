@@ -33,9 +33,22 @@ function SwatchMesh() {
 }
 
 export function FabricSwatch3D() {
+  const [isMobile, setIsMobile] = React.useState(false);
+  
+  React.useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className="w-full h-full relative">
-      <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+    <div style={{ width: '100%', height: 'clamp(300px, 50vw, 600px)', position: 'relative' }}>
+      <Canvas 
+        style={{ width: '100%', height: '100%' }}
+        dpr={isMobile ? 1 : [1, 2]}
+        camera={{ position: [0, 0, 8], fov: isMobile ? 65 : 45 }}
+      >
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1.5} color="#ffffff" />
         <directionalLight position={[-10, -10, -5]} intensity={0.5} color="#C9A84C" />

@@ -48,7 +48,7 @@ export default function Home() {
 
   return (
     <main ref={containerRef} className="w-full bg-[#0A0A0F]" style={{ height: '600vh' }}>
-      <div className="sticky top-0 w-full h-[100vh] overflow-hidden bg-[#0A0A0F]">
+      <div className="sticky top-0 w-full min-h-[100svh] h-[100svh] overflow-hidden bg-[#0A0A0F]">
         
         {progress < 0.35 && (
           <ExteriorSection progress={progress} />

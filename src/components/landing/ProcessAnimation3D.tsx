@@ -88,9 +88,18 @@ function TailorProcessScene() {
 }
 
 export function ProcessAnimation3D() {
+  const [isMobile, setIsMobile] = React.useState(false);
+  
+  React.useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="absolute inset-0 w-full h-full z-0 opacity-60 pointer-events-auto">
-      <Canvas shadows camera={{ position: [0, 1.5, 8], fov: 35 }}>
+      <Canvas shadows camera={{ position: [0, 1.5, 8], fov: isMobile ? 50 : 35 }} dpr={isMobile ? 1 : [1, 2]} style={{ width: '100%', height: '100%' }}>
         <TailorProcessScene />
       </Canvas>
     </div>

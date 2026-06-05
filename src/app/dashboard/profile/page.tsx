@@ -83,12 +83,12 @@ export default function ProfilePage() {
   );
 
   return (
-    <div className="max-w-[600px] mx-auto pb-24 mt-4 flex flex-col items-center">
+    <div className="max-w-full max-w-[600px] mx-auto pb-12 md:pb-24 mt-4 flex flex-col items-center">
       
       {/* PAGE HEADER */}
       <div className="text-center mb-10">
-        <h1 className="font-[family-name:var(--font-serif)] italic text-[26px] text-[var(--ink-dark)] mb-1">Your Atelier Profile</h1>
-        <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)]">Your shop's identity and details</p>
+        <h1 className="font-[family-name:var(--font-serif)] italic text-[clamp(18px,4.5vw,24px)] text-[var(--ink-dark)] mb-1">Your Atelier Profile</h1>
+        <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">Your shop's identity and details</p>
       </div>
 
       <form action={handleProfileUpdate} className="w-full space-y-8 flex flex-col items-center">
@@ -96,16 +96,16 @@ export default function ProfilePage() {
         {/* SECTION 1: SHOP IDENTITY */}
         <div className="w-full">
           <ChalkLabel className="mb-4 text-center block">THE ESTABLISHMENT</ChalkLabel>
-          <FabricCard className="p-8 space-y-8">
+          <FabricCard className="p-4 md:p-6 lg:p-8 space-y-8">
             <div className="flex flex-col items-center gap-3">
               <div 
                 className="relative w-[64px] h-[64px] rounded-full border-[2px] border-dashed border-[var(--stitch-strong)] flex items-center justify-center overflow-hidden cursor-pointer group hover:border-[var(--thread-gold)] transition-colors bg-[var(--bg-surface)]"
                 onClick={() => fileInputRef.current?.click()}
               >
                 {shop?.logo_url ? (
-                  <Image src={shop.logo_url} alt="Shop Logo" fill className="object-cover" />
+                  <Image sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" src={shop.logo_url} alt="Shop Logo" fill className="object-cover" />
                 ) : (
-                  <span className="font-[family-name:var(--font-serif)] text-[24px] text-[var(--ink-mid)] group-hover:text-[var(--thread-gold)] transition-colors">
+                  <span className="font-[family-name:var(--font-serif)] text-[clamp(18px,4.5vw,24px)] text-[var(--ink-mid)] group-hover:text-[var(--thread-gold)] transition-colors">
                     {shop?.shop_name?.charAt(0) || "S"}
                   </span>
                 )}
@@ -116,25 +116,25 @@ export default function ProfilePage() {
                 )}
                 <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleLogoUpload} />
               </div>
-              <span className="font-[family-name:var(--font-sans)] font-light text-[12px] text-[var(--ink-light)]">Upload shop logo</span>
+              <span className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-light)]">Upload shop logo</span>
             </div>
 
             <div className="space-y-5">
               <div>
-                <label className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">Shop Name</label>
+                <label className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">Shop Name</label>
                 <input 
                   name="shopName" 
                   defaultValue={shop?.shop_name} 
                   required 
-                  className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-serif)] text-[18px] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
+                  className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-serif)] text-[clamp(15px,3.5vw,18px)] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
                 />
               </div>
               <div>
-                <label className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">City / Location</label>
+                <label className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">City / Location</label>
                 <input 
                   name="city" 
                   defaultValue={shop?.city || "Ahmedabad"} 
-                  className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
+                  className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
                 />
               </div>
             </div>
@@ -144,32 +144,32 @@ export default function ProfilePage() {
         {/* SECTION 2: PROPRIETOR DETAILS */}
         <div className="w-full">
           <ChalkLabel className="mb-4 text-center block">THE ARTISAN</ChalkLabel>
-          <FabricCard className="p-8 space-y-5">
+          <FabricCard className="p-4 md:p-6 lg:p-8 space-y-5">
             <div>
-              <label className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">Owner Name</label>
+              <label className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">Owner Name</label>
               <input 
                 name="ownerName" 
                 defaultValue={shop?.owner_name} 
                 required 
-                className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
+                className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
               />
             </div>
             <div>
-              <label className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">Mobile Number</label>
+              <label className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">Mobile Number</label>
               <input 
                 name="mobile" 
                 defaultValue={shop?.mobile} 
                 required 
-                className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
+                className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
               />
             </div>
             <div>
-              <label className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">Email Address</label>
+              <label className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">Email Address</label>
               <div className="relative">
                 <input 
                   value={userEmail} 
                   readOnly 
-                  className="w-full bg-transparent border border-dashed border-[var(--stitch-strong)] rounded-[6px] px-4 py-3 pl-10 font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-mid)] cursor-not-allowed opacity-80"
+                  className="w-full bg-transparent border border-dashed border-[var(--stitch-strong)] rounded-[6px] px-4 py-3 pl-10 font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] cursor-not-allowed opacity-80"
                 />
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--ink-light)]" />
               </div>
@@ -178,7 +178,7 @@ export default function ProfilePage() {
         </div>
 
         {/* SAVE BUTTON */}
-        <div className="w-full max-w-[360px] pt-4 text-center">
+        <div className="w-full max-w-full max-w-[360px] pt-4 text-center">
           <ThreadButton 
             type="submit" 
             className="w-full h-[52px]"
@@ -188,7 +188,7 @@ export default function ProfilePage() {
           </ThreadButton>
           <div className="h-6 mt-2">
             <span className={cn(
-              "font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-faint)] transition-opacity duration-500",
+              "font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)] transition-opacity duration-500",
               saveStatus === "saved" ? "opacity-100" : "opacity-0"
             )}>
               Changes saved automatically

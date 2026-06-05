@@ -62,10 +62,10 @@ export default async function DashboardHome() {
       {/* GREETING SECTION */}
       <div className="relative">
         <ChalkLabel>Today's Atelier</ChalkLabel>
-        <h1 className="font-[family-name:var(--font-serif)] text-[32px] text-[var(--ink-dark)] mt-2 mb-1">
+        <h1 className="font-[family-name:var(--font-serif)] text-[clamp(20px,5vw,30px)] text-[var(--ink-dark)] mt-2 mb-1">
           {greeting}, {ownerName}.
         </h1>
-        <p className="font-[family-name:var(--font-sans)] font-light text-[14px] text-[var(--ink-mid)]">
+        <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">
           {formattedDate} &nbsp;&mdash;&nbsp; Ahmedabad
         </p>
 
@@ -84,31 +84,31 @@ export default async function DashboardHome() {
         <FabricCard className="border-l-[3px] border-l-[var(--thread-gold)] pl-5 flex flex-col gap-3">
           <ChalkLabel>Trials Today</ChalkLabel>
           <MeasurementBadge value={todayCount} size="lg" />
-          <p className="font-[family-name:var(--font-sans)] font-light text-[12px] text-[var(--ink-light)]">+2 from yesterday</p>
+          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-light)]">+2 from yesterday</p>
         </FabricCard>
 
         <FabricCard className="border-l-[3px] border-l-[var(--fabric-teal)] pl-5 flex flex-col gap-3">
           <ChalkLabel>Trials This Month</ChalkLabel>
           <MeasurementBadge value={monthCount} size="lg" />
-          <p className="font-[family-name:var(--font-sans)] font-light text-[12px] text-[var(--ink-light)]">15% up this month</p>
+          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-light)]">15% up this month</p>
         </FabricCard>
 
         <FabricCard className="border-l-[3px] border-l-[var(--fabric-red)] pl-5 flex flex-col gap-3">
           <ChalkLabel>Satisfaction Score</ChalkLabel>
           <MeasurementBadge value="4.9" size="lg" />
-          <p className="font-[family-name:var(--font-sans)] font-light text-[12px] text-[var(--ink-light)]">Based on 42 reviews</p>
+          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-light)]">Based on 42 reviews</p>
         </FabricCard>
       </div>
 
       {/* ACTIVITY SECTION */}
       <div>
-        <h2 className="font-[family-name:var(--font-serif)] italic text-[18px] text-[var(--ink-dark)] mb-4">Today's work</h2>
+        <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(15px,3.5vw,18px)] text-[var(--ink-dark)] mb-4">Today's work</h2>
         <MeasureDivider />
         
         <div className="mt-6 flex flex-col gap-3">
           {todayTrials.length === 0 ? (
             <div className="py-12 flex flex-col items-center justify-center gap-4 border border-dashed border-[var(--ink-faint)] rounded-[12px] bg-[var(--bg-surface)]">
-              <p className="font-[family-name:var(--font-serif)] italic text-[16px] text-[var(--ink-light)]">The day is fresh. Start your first trial.</p>
+              <p className="font-[family-name:var(--font-serif)] italic text-[clamp(14px,3vw,16px)] text-[var(--ink-light)]">The day is fresh. Start your first trial.</p>
               <Link href="/dashboard/new-trial">
                 <ThreadButton variant="ghost">Begin a new trial &rarr;</ThreadButton>
               </Link>
@@ -133,7 +133,7 @@ export default async function DashboardHome() {
           }}
         />
         
-        <h3 className="font-[family-name:var(--font-serif)] text-[22px] text-[var(--bg-parchment)] relative z-10">
+        <h3 className="font-[family-name:var(--font-serif)] text-[clamp(16px,4vw,20px)] text-[var(--bg-parchment)] relative z-10">
           Ready for your next customer?
         </h3>
         

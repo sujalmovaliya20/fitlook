@@ -56,10 +56,10 @@ export function GarmentSelector({
   return (
     <div className="space-y-10">
       <div>
-        <h2 className="font-[family-name:var(--font-display)] text-[24px] text-[var(--text-primary)] mb-6">Choose the garment style</h2>
+        <h2 className="font-[family-name:var(--font-display)] text-[clamp(18px,4.5vw,24px)] text-[var(--text-primary)] mb-6">Choose the garment style</h2>
         
         <motion.div 
-          className="grid grid-cols-2 md:grid-cols-3 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
           variants={containerVariants}
           initial="hidden"
           animate="show"
@@ -88,12 +88,12 @@ export function GarmentSelector({
                   )}
 
                   <div className="flex flex-col gap-3">
-                    <span className="text-[40px] leading-none">{garment.emoji}</span>
+                    <span className="text-[clamp(22px,6vw,36px)] leading-none">{garment.emoji}</span>
                     <div>
-                      <h4 className={cn("font-medium text-[14px]", isSelected ? "text-[var(--accent-gold)]" : "text-[var(--text-primary)]")}>
+                      <h4 className={cn("font-medium text-[clamp(12px,2.5vw,14px)]", isSelected ? "text-[var(--accent-gold)]" : "text-[var(--text-primary)]")}>
                         {garment.id}
                       </h4>
-                      <p className="text-[12px] text-[var(--text-muted)] mt-1 uppercase tracking-wider">{garment.category}</p>
+                      <p className="text-[clamp(10px,2vw,12px)] text-[var(--text-muted)] mt-1 uppercase tracking-wider">{garment.category}</p>
                     </div>
                   </div>
                 </GlowCard>
@@ -103,8 +103,8 @@ export function GarmentSelector({
         </motion.div>
       </div>
 
-      <div className="bg-[var(--bg-card)] border border-[rgba(255,255,255,0.05)] rounded-[var(--radius-lg)] p-8 space-y-6">
-        <h3 className="font-[family-name:var(--font-display)] text-[20px] text-[var(--text-primary)] mb-4">Trial Details</h3>
+      <div className="bg-[var(--bg-card)] border border-[rgba(255,255,255,0.05)] rounded-[var(--radius-lg)] p-4 md:p-6 lg:p-8 space-y-6">
+        <h3 className="font-[family-name:var(--font-display)] text-[clamp(16px,4vw,20px)] text-[var(--text-primary)] mb-4">Trial Details</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FloatingInput 
@@ -124,7 +124,7 @@ export function GarmentSelector({
         <div>
           <button 
             onClick={() => setShowNotes(!showNotes)}
-            className="flex items-center gap-2 text-[14px] text-[var(--accent-gold)] hover:text-[#E5B96A] transition-colors font-medium mt-2"
+            className="flex items-center gap-2 text-[clamp(12px,2.5vw,14px)] text-[var(--accent-gold)] hover:text-[#E5B96A] transition-colors font-medium mt-2"
           >
             {showNotes ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
             {showNotes ? "Remove style notes" : "Add style notes (Optional)"}
@@ -144,7 +144,7 @@ export function GarmentSelector({
                     value={instructions}
                     onChange={(e) => onChangeInstructions(e.target.value)}
                     placeholder="e.g. V-neck, 3/4 sleeves, ankle length..."
-                    className="w-full min-h-[100px] bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.08)] rounded-[10px] p-4 text-[15px] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-gold)] focus:shadow-[var(--glow-gold)] transition-all resize-y"
+                    className="w-full min-h-[100px] bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.08)] rounded-[10px] p-4 text-[clamp(14px,3vw,16px)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-gold)] focus:shadow-[var(--glow-gold)] transition-all resize-y"
                   />
                 </div>
               </motion.div>

@@ -26,7 +26,7 @@ export const FloatingInput = React.forwardRef<HTMLInputElement, FloatingInputPro
           type={inputType}
           className={cn(
             "peer w-full h-full bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.08)]",
-            "rounded-[10px] px-4 pt-4 pb-1 outline-none text-[15px] font-[family-name:var(--font-body)] font-normal text-[var(--text-primary)]",
+            "rounded-[10px] px-4 pt-4 pb-1 outline-none text-[16px] font-[family-name:var(--font-body)] font-normal text-[var(--text-primary)]",
             "transition-all duration-300",
             "focus:border-[var(--accent-gold)] focus:shadow-[var(--glow-gold)]"
           )}
@@ -46,9 +46,9 @@ export const FloatingInput = React.forwardRef<HTMLInputElement, FloatingInputPro
         <label
           className={cn(
             "absolute left-4 text-[var(--text-secondary)] font-[family-name:var(--font-body)] transition-all duration-300 pointer-events-none",
-            "top-1/2 -translate-y-1/2 text-[15px]",
-            "peer-focus:top-3 peer-focus:-translate-y-1/2 peer-focus:text-[11px] peer-focus:text-[var(--accent-gold)]",
-            "peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[11px]"
+            "top-1/2 -translate-y-1/2 text-[clamp(14px,3vw,16px)]",
+            "peer-focus:top-3 peer-focus:-translate-y-1/2 peer-focus:text-[clamp(10px,2vw,12px)] peer-focus:text-[var(--accent-gold)]",
+            "peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[clamp(10px,2vw,12px)]"
           )}
         >
           {label} {required && <span className="text-[var(--accent-red)]">*</span>}

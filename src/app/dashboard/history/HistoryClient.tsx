@@ -52,20 +52,20 @@ export function HistoryClient({ initialTrials, totalCompleted }: { initialTrials
     switch (status) {
       case "generated":
         return (
-          <span className="inline-block bg-[rgba(26,92,92,0.1)] text-[var(--fabric-teal)] font-[family-name:var(--font-sans)] font-light text-[11px] px-2.5 py-0.5 rounded-full border border-[var(--fabric-teal)]/20">
+          <span className="inline-block bg-[rgba(26,92,92,0.1)] text-[var(--fabric-teal)] font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] px-2.5 py-0.5 rounded-full border border-[var(--fabric-teal)]/20">
             ✓ Stitched
           </span>
         );
       case "pending":
       case "processing":
         return (
-          <span className="inline-block bg-[var(--thread-muted)] text-[var(--thread-gold)] font-[family-name:var(--font-sans)] font-light text-[11px] px-2.5 py-0.5 rounded-full border border-[var(--thread-gold)]/20">
+          <span className="inline-block bg-[var(--thread-muted)] text-[var(--thread-gold)] font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] px-2.5 py-0.5 rounded-full border border-[var(--thread-gold)]/20">
             ⧗ In progress
           </span>
         );
       case "failed":
         return (
-          <span className="inline-block bg-[rgba(139,26,26,0.08)] text-[var(--fabric-red)] font-[family-name:var(--font-sans)] font-light text-[11px] px-2.5 py-0.5 rounded-full border border-[var(--fabric-red)]/20">
+          <span className="inline-block bg-[rgba(139,26,26,0.08)] text-[var(--fabric-red)] font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] px-2.5 py-0.5 rounded-full border border-[var(--fabric-red)]/20">
             ✗ Retry needed
           </span>
         );
@@ -80,12 +80,12 @@ export function HistoryClient({ initialTrials, totalCompleted }: { initialTrials
       {/* PAGE HEADER */}
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="font-[family-name:var(--font-serif)] text-[28px] text-[var(--ink-dark)] mb-1 leading-none">Order Register</h1>
-          <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)]">{totalCompleted} trials completed this month</p>
+          <h1 className="font-[family-name:var(--font-serif)] text-[clamp(20px,5vw,30px)] text-[var(--ink-dark)] mb-1 leading-none">Order Register</h1>
+          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">{totalCompleted} trials completed this month</p>
         </div>
         <div className="flex flex-col items-end gap-1">
-          <span className="font-[family-name:var(--font-sans)] font-light text-[10px] text-[var(--ink-faint)] uppercase tracking-widest">Total Orders</span>
-          <div className="font-[family-name:var(--font-mono)] text-[32px] font-light text-[var(--thread-gold)] leading-none" style={{ textShadow: '0 1px 2px rgba(201,168,76,0.2)' }}>
+          <span className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)] uppercase tracking-widest">Total Orders</span>
+          <div className="font-[family-name:var(--font-mono)] text-[clamp(20px,5vw,30px)] font-light text-[var(--thread-gold)] leading-none" style={{ textShadow: '0 1px 2px rgba(201,168,76,0.2)' }}>
             {initialTrials.length.toString().padStart(3, '0')}
           </div>
         </div>
@@ -100,7 +100,7 @@ export function HistoryClient({ initialTrials, totalCompleted }: { initialTrials
             placeholder="Search by customer name…"
             value={search}
             onChange={(e) => { setSearch(e.target.value); setCurrentPage(1); }}
-            className="w-full h-[40px] pl-9 pr-3 bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[13px] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200"
+            className="w-full h-[40px] pl-9 pr-3 bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--thread-gold)] focus:bg-[var(--bg-warm-white)] transition-all duration-200"
           />
         </div>
 
@@ -117,7 +117,7 @@ export function HistoryClient({ initialTrials, totalCompleted }: { initialTrials
                 key={tab.id}
                 onClick={() => handleTabClick(tab.id)}
                 className={cn(
-                  "pb-2 font-[family-name:var(--font-sans)] text-[12px] transition-colors relative",
+                  "pb-2 font-[family-name:var(--font-sans)] text-[clamp(10px,2vw,12px)] transition-colors relative",
                   isActive 
                     ? "text-[var(--ink-dark)] font-normal border-b-2 border-[var(--thread-gold)]" 
                     : "text-[var(--ink-light)] font-light border-b-2 border-transparent hover:text-[var(--ink-mid)]"
@@ -135,11 +135,11 @@ export function HistoryClient({ initialTrials, totalCompleted }: { initialTrials
       <FabricCard className="p-0 overflow-hidden min-h-[400px] flex flex-col">
         {/* Column Headers */}
         <div className="grid grid-cols-[80px_60px_1fr_100px_120px] px-6 pt-6 pb-2 items-end">
-          <ChalkLabel className="!text-[10px]">Order</ChalkLabel>
-          <ChalkLabel className="!text-[10px]">Fabric</ChalkLabel>
-          <ChalkLabel className="!text-[10px]">Customer & Cut</ChalkLabel>
-          <ChalkLabel className="!text-[10px]">Date</ChalkLabel>
-          <ChalkLabel className="!text-[10px] text-right">Status</ChalkLabel>
+          <ChalkLabel className="!text-[clamp(10px,2vw,12px)]">Order</ChalkLabel>
+          <ChalkLabel className="!text-[clamp(10px,2vw,12px)]">Fabric</ChalkLabel>
+          <ChalkLabel className="!text-[clamp(10px,2vw,12px)]">Customer & Cut</ChalkLabel>
+          <ChalkLabel className="!text-[clamp(10px,2vw,12px)]">Date</ChalkLabel>
+          <ChalkLabel className="!text-[clamp(10px,2vw,12px)] text-right">Status</ChalkLabel>
         </div>
         <div className="px-6 mb-2">
           <div className="w-full h-[1px] bg-[var(--stitch-strong)]" />
@@ -159,8 +159,8 @@ export function HistoryClient({ initialTrials, totalCompleted }: { initialTrials
               <div className="absolute top-4 left-[55%] w-[20px] h-[1px] bg-[var(--stitch)] transform -skew-y-6" />
             </div>
             
-            <h3 className="font-[family-name:var(--font-serif)] italic text-[18px] text-[var(--ink-light)] mb-1">Your register is empty.</h3>
-            <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-faint)] mb-6">Your first trial will appear here.</p>
+            <h3 className="font-[family-name:var(--font-serif)] italic text-[clamp(15px,3.5vw,18px)] text-[var(--ink-light)] mb-1">Your register is empty.</h3>
+            <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-faint)] mb-6">Your first trial will appear here.</p>
             <ThreadButton variant="ghost" onClick={() => window.location.href='/dashboard/new-trial'}>Start a trial &rarr;</ThreadButton>
           </div>
         ) : (
@@ -184,28 +184,28 @@ export function HistoryClient({ initialTrials, totalCompleted }: { initialTrials
                     )}
                   >
                     {/* View Right Hover */}
-                    <div className="absolute right-6 opacity-0 group-hover:opacity-100 transition-opacity font-[family-name:var(--font-sans)] font-light text-[12px] text-[var(--ink-mid)] pointer-events-none">
+                    <div className="absolute right-6 opacity-0 group-hover:opacity-100 transition-opacity font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-mid)] pointer-events-none">
                       View &rarr;
                     </div>
 
-                    <div className="font-[family-name:var(--font-mono)] font-light text-[11px] text-[var(--ink-faint)] uppercase tracking-wider">
+                    <div className="font-[family-name:var(--font-mono)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)] uppercase tracking-wider">
                       TRL-{shortId}
                     </div>
                     
                     <div className="w-[40px] h-[40px] rounded-[4px] overflow-hidden bg-[var(--stitch)] border border-[var(--stitch-strong)] relative">
                       {trial.fabric_image_url ? (
-                        <Image src={trial.fabric_image_url} alt="Fabric" fill className="object-cover" />
+                        <Image sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" src={trial.fabric_image_url} alt="Fabric" fill className="object-cover" />
                       ) : (
                         <div className="w-full h-full" style={{ background: 'linear-gradient(135deg, var(--fabric-teal), var(--thread-saffron))', opacity: 0.8 }} />
                       )}
                     </div>
                     
                     <div className="flex flex-col justify-center">
-                      <span className="font-[family-name:var(--font-sans)] font-normal text-[14px] text-[var(--ink-dark)]">{trial.customer_name || "Walk-in Customer"}</span>
-                      <span className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-light)] capitalize">{trial.garment_type.replace(/-/g, ' ')}</span>
+                      <span className="font-[family-name:var(--font-sans)] font-normal text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)]">{trial.customer_name || "Walk-in Customer"}</span>
+                      <span className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-light)] capitalize">{trial.garment_type.replace(/-/g, ' ')}</span>
                     </div>
                     
-                    <div className="font-[family-name:var(--font-mono)] font-light text-[12px] text-[var(--ink-mid)]">
+                    <div className="font-[family-name:var(--font-mono)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-mid)]">
                       {formattedDate}
                     </div>
                     
@@ -221,14 +221,14 @@ export function HistoryClient({ initialTrials, totalCompleted }: { initialTrials
                       isExpanded ? "max-h-[800px] border-b border-dashed border-[var(--stitch)] pb-6 pt-2" : "max-h-0 border-b border-transparent"
                     )}
                   >
-                    <div className="pl-[140px] flex gap-8 opacity-100">
+                    <div className="pl-[140px] flex gap-4 md:p-6 lg:p-8 opacity-100">
                       {trial.result_image_url ? (
                         <div className="w-[120px] aspect-[3/4] rounded-[6px] overflow-hidden border border-[var(--stitch)] relative shadow-sm">
-                          <Image src={trial.result_image_url} alt="Result" fill className="object-cover" />
+                          <Image sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" src={trial.result_image_url} alt="Result" fill className="object-cover" />
                         </div>
                       ) : (
                         <div className="w-[120px] aspect-[3/4] rounded-[6px] border border-dashed border-[var(--stitch-strong)] flex items-center justify-center text-center p-2">
-                          <span className="font-[family-name:var(--font-sans)] font-light text-[10px] text-[var(--ink-faint)]">
+                          <span className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">
                             {trial.status === 'failed' ? "Failed" : "Processing"}
                           </span>
                         </div>
@@ -237,7 +237,7 @@ export function HistoryClient({ initialTrials, totalCompleted }: { initialTrials
                       <div className="flex flex-col gap-4 max-w-sm pt-2">
                         <div>
                           <ChalkLabel className="mb-0.5">Style Notes</ChalkLabel>
-                          <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] italic">
+                          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] italic">
                             {trial.instructions || "No notes provided for this stitch."}
                           </p>
                         </div>
@@ -268,7 +268,7 @@ export function HistoryClient({ initialTrials, totalCompleted }: { initialTrials
           >
             &larr; Prev
           </ThreadButton>
-          <span className="font-[family-name:var(--font-mono)] font-light text-[12px] text-[var(--ink-light)]">
+          <span className="font-[family-name:var(--font-mono)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-light)]">
             Page {currentPage} of {totalPages}
           </span>
           <ThreadButton 

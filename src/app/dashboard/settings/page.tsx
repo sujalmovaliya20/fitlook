@@ -60,37 +60,37 @@ export default function SettingsPage() {
   );
 
   return (
-    <div className="max-w-[600px] mx-auto pb-24 mt-4 flex flex-col items-center">
+    <div className="max-w-full max-w-[600px] mx-auto pb-12 md:pb-24 mt-4 flex flex-col items-center">
       
       {/* PAGE HEADER */}
       <div className="text-center mb-10">
-        <h1 className="font-[family-name:var(--font-serif)] italic text-[26px] text-[var(--ink-dark)] mb-1">Security & Preferences</h1>
-        <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)]">Manage your account security and data</p>
+        <h1 className="font-[family-name:var(--font-serif)] italic text-[clamp(18px,4.5vw,24px)] text-[var(--ink-dark)] mb-1">Security & Preferences</h1>
+        <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">Manage your account security and data</p>
       </div>
 
       {/* SECTION 1: CREDENTIALS */}
       <div className="w-full">
         <ChalkLabel className="mb-4 text-center block">SECURITY</ChalkLabel>
-        <FabricCard className="p-8">
+        <FabricCard className="p-4 md:p-6 lg:p-8">
           <form id="pwd-form" action={handlePasswordUpdate} className="space-y-5">
             <div>
-              <label className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">New Password</label>
+              <label className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">New Password</label>
               <input 
                 name="password" 
                 type="password"
                 required 
                 minLength={6}
-                className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
+                className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
               />
             </div>
             <div>
-              <label className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">Confirm New Password</label>
+              <label className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-mid)] uppercase tracking-widest mb-1.5 block">Confirm New Password</label>
               <input 
                 name="confirmPassword" 
                 type="password"
                 required 
                 minLength={6}
-                className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
+                className="w-full bg-[var(--bg-surface)] border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] focus:outline-none focus:border-[var(--thread-gold)] transition-colors"
               />
             </div>
             <div className="pt-2">
@@ -106,23 +106,23 @@ export default function SettingsPage() {
 
       {/* DANGER ZONE */}
       <div className="w-full">
-        <div className="bg-[rgba(139,26,26,0.04)] border border-[rgba(139,26,26,0.15)] rounded-[8px] p-8 text-center flex flex-col items-center">
+        <div className="bg-[rgba(139,26,26,0.04)] border border-[rgba(139,26,26,0.15)] rounded-[8px] p-4 md:p-6 lg:p-8 text-center flex flex-col items-center">
           <ChalkLabel className="!text-[var(--fabric-red)] mb-2 block">CLOSE ATELIER</ChalkLabel>
-          <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] mb-6 max-w-sm">
+          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] mb-6 max-w-sm">
             Permanently delete your shop and all trial data. This action cannot be undone.
           </p>
           
-          <div className="w-full max-w-[320px] space-y-4">
+          <div className="w-full max-w-full max-w-[320px] space-y-4">
             <input 
               value={deleteConfirm}
               onChange={(e) => setDeleteConfirm(e.target.value)}
               placeholder={`Type "${shop?.shop_name || "shop name"}" to confirm`}
-              className="w-full bg-transparent border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[13px] text-[var(--ink-dark)] text-center focus:outline-none focus:border-[var(--fabric-red)] transition-colors placeholder:text-[var(--ink-faint)]"
+              className="w-full bg-transparent border border-[var(--stitch)] rounded-[6px] px-4 py-3 font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] text-center focus:outline-none focus:border-[var(--fabric-red)] transition-colors placeholder:text-[var(--ink-faint)]"
             />
             <button 
               onClick={handleDeleteAccount}
               disabled={deleteConfirm !== shop?.shop_name}
-              className="w-full h-[46px] rounded-[6px] border border-[var(--fabric-red)] text-[var(--fabric-red)] font-[family-name:var(--font-sans)] text-[14px] font-medium transition-colors hover:bg-[rgba(139,26,26,0.08)] disabled:opacity-30 disabled:cursor-not-allowed"
+              className="w-full h-[46px] rounded-[6px] border border-[var(--fabric-red)] text-[var(--fabric-red)] font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] font-medium transition-colors hover:bg-[rgba(139,26,26,0.08)] disabled:opacity-30 disabled:cursor-not-allowed"
             >
               Delete my atelier
             </button>

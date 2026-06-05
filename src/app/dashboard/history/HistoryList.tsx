@@ -28,7 +28,7 @@ export function HistoryList({ trials }: { trials: Trial[] }) {
           <div className="absolute bottom-0 left-0 w-20 h-20 bg-[var(--bg-deep)] rounded-lg border border-[var(--border-subtle)] transform rotate-12" />
         </div>
         <h3 className="text-xl font-[family-name:var(--font-display)] text-[var(--accent-gold)] tracking-wide mb-2">No trials found.</h3>
-        <p className="text-[var(--text-secondary)] text-[14px]">Your generated trials will appear here.</p>
+        <p className="text-[var(--text-secondary)] text-[clamp(12px,2.5vw,14px)]">Your generated trials will appear here.</p>
       </div>
     );
   }
@@ -50,7 +50,7 @@ export function HistoryList({ trials }: { trials: Trial[] }) {
   return (
     <div className="flex flex-col gap-3">
       {/* Header Row */}
-      <div className="hidden md:grid grid-cols-[1fr_1fr_1fr_1fr_100px] px-6 py-3 text-[12px] font-medium text-[var(--text-muted)] uppercase tracking-wider">
+      <div className="hidden md:grid grid-cols-[1fr_1fr_1fr_1fr_100px] px-6 py-3 text-[clamp(10px,2vw,12px)] font-medium text-[var(--text-muted)] uppercase tracking-wider">
         <div>Customer</div>
         <div>Fabric Type</div>
         <div>Garment Type</div>
@@ -78,27 +78,27 @@ export function HistoryList({ trials }: { trials: Trial[] }) {
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-[10px] overflow-hidden bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] relative flex-shrink-0">
                   {trial.fabric_image_url ? (
-                    <Image src={trial.fabric_image_url} alt="Fabric" fill className="object-cover" />
+                    <Image sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" src={trial.fabric_image_url} alt="Fabric" fill className="object-cover" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-[10px] text-[var(--text-muted)]">No img</div>
+                    <div className="w-full h-full flex items-center justify-center text-[clamp(10px,2vw,12px)] text-[var(--text-muted)]">No img</div>
                   )}
                 </div>
-                <span className="font-medium text-[var(--text-primary)] text-[15px]">{trial.customer_name}</span>
+                <span className="font-medium text-[var(--text-primary)] text-[clamp(14px,3vw,16px)]">{trial.customer_name}</span>
               </div>
-              <div className="text-[14px] text-[var(--text-secondary)]">
-                <span className="md:hidden text-[var(--text-muted)] text-[12px] uppercase mr-2">Fabric:</span>
+              <div className="text-[clamp(12px,2.5vw,14px)] text-[var(--text-secondary)]">
+                <span className="md:hidden text-[var(--text-muted)] text-[clamp(10px,2vw,12px)] uppercase mr-2">Fabric:</span>
                 {trial.fabric_type || "N/A"}
               </div>
-              <div className="text-[14px] text-[var(--text-secondary)] capitalize">
-                <span className="md:hidden text-[var(--text-muted)] text-[12px] uppercase mr-2">Garment:</span>
+              <div className="text-[clamp(12px,2.5vw,14px)] text-[var(--text-secondary)] capitalize">
+                <span className="md:hidden text-[var(--text-muted)] text-[clamp(10px,2vw,12px)] uppercase mr-2">Garment:</span>
                 {trial.garment_type}
               </div>
-              <div className="text-[14px] text-[var(--text-secondary)]">
-                <span className="md:hidden text-[var(--text-muted)] text-[12px] uppercase mr-2">Date:</span>
+              <div className="text-[clamp(12px,2.5vw,14px)] text-[var(--text-secondary)]">
+                <span className="md:hidden text-[var(--text-muted)] text-[clamp(10px,2vw,12px)] uppercase mr-2">Date:</span>
                 {new Date(trial.created_at).toLocaleDateString()}
               </div>
               <div className="md:text-right">
-                <span className={cn("inline-flex items-center rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider border", getStatusBadge(trial.status))}>
+                <span className={cn("inline-flex items-center rounded-full px-3 py-1 text-[clamp(10px,2vw,12px)] font-bold uppercase tracking-wider border", getStatusBadge(trial.status))}>
                   {trial.status}
                 </span>
               </div>
@@ -114,20 +114,20 @@ export function HistoryList({ trials }: { trials: Trial[] }) {
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                   className="border-t border-[var(--border-subtle)] bg-[#111118]/50"
                 >
-                  <div className="p-6 md:px-12 md:py-8 flex flex-col md:flex-row gap-8 items-center justify-center">
+                  <div className="p-6 md:px-4 md:px-4 lg:px-8 lg:px-12 md:py-4 md:py-8 flex flex-col md:flex-row gap-4 md:p-6 lg:p-8 items-center justify-center">
                     {trial.result_image_url ? (
-                      <div className="relative w-full max-w-[300px] aspect-[3/4] rounded-[16px] overflow-hidden border border-[var(--border-subtle)] shadow-2xl">
-                        <Image src={trial.result_image_url} alt="Result" fill className="object-cover" />
+                      <div className="relative w-full max-w-full max-w-[300px] aspect-[3/4] rounded-[16px] overflow-hidden border border-[var(--border-subtle)] shadow-2xl">
+                        <Image sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" src={trial.result_image_url} alt="Result" fill className="object-cover" />
                       </div>
                     ) : (
-                      <div className="w-full max-w-[300px] aspect-[3/4] rounded-[16px] border border-dashed border-[var(--border-subtle)] flex flex-col items-center justify-center text-center p-6 text-[var(--text-secondary)] bg-[rgba(255,255,255,0.01)]">
+                      <div className="w-full max-w-full max-w-[300px] aspect-[3/4] rounded-[16px] border border-dashed border-[var(--border-subtle)] flex flex-col items-center justify-center text-center p-6 text-[var(--text-secondary)] bg-[rgba(255,255,255,0.01)]">
                         {trial.status === "failed" ? "Generation failed. Please try again." : "Result image is not available yet."}
                       </div>
                     )}
                     
                     {trial.result_image_url && (
                       <div className="flex flex-col gap-4">
-                        <a href={trial.result_image_url} download className="px-6 py-3 rounded-full border border-[var(--accent-gold)] text-[var(--accent-gold)] hover:bg-[var(--accent-gold-muted)] transition-colors text-[14px] font-medium inline-block text-center">
+                        <a href={trial.result_image_url} download className="px-6 py-3 rounded-full border border-[var(--accent-gold)] text-[var(--accent-gold)] hover:bg-[var(--accent-gold-muted)] transition-colors text-[clamp(12px,2.5vw,14px)] font-medium inline-block text-center">
                           Download Image
                         </a>
                       </div>

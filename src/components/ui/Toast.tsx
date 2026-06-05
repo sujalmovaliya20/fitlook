@@ -82,7 +82,7 @@ function ToastItem({ toast, onRemove }: { toast: ToastMessage; onRemove: (id: st
       className={`pointer-events-auto relative overflow-hidden flex items-start gap-3 bg-[var(--bg-card)] p-4 rounded-[12px] border-l-[3px] shadow-2xl ${borders[toast.type]} border-y border-y-[rgba(255,255,255,0.05)] border-r border-r-[rgba(255,255,255,0.05)]`}
     >
       <div className="mt-0.5">{icons[toast.type]}</div>
-      <p className="text-[14px] font-[family-name:var(--font-body)] text-[var(--text-primary)] leading-tight flex-1">
+      <p className="text-[clamp(12px,2.5vw,14px)] font-[family-name:var(--font-body)] text-[var(--text-primary)] leading-tight flex-1">
         {toast.message}
       </p>
       <button onClick={() => onRemove(toast.id)} className="text-[var(--text-muted)] hover:text-white transition-colors">

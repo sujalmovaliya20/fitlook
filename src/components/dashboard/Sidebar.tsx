@@ -31,7 +31,7 @@ export function Sidebar({ shopName }: SidebarProps) {
               FitLook
             </span>
           </Link>
-          <div className="text-[13px] text-[var(--text-secondary)] font-medium tracking-wide truncate">
+          <div className="text-[clamp(12px,2.5vw,14px)] text-[var(--text-secondary)] font-medium tracking-wide truncate">
             {shopName}
           </div>
         </div>
@@ -45,7 +45,7 @@ export function Sidebar({ shopName }: SidebarProps) {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 px-[20px] py-[10px] rounded-[10px] text-[14px] font-medium transition-all duration-150 border-l-[3px] border-transparent relative overflow-hidden group",
+                  "flex items-center gap-3 px-[20px] py-[10px] rounded-[10px] text-[clamp(12px,2.5vw,14px)] font-medium transition-all duration-150 border-l-[3px] border-transparent relative overflow-hidden group",
                   isActive 
                     ? "text-[var(--accent-gold)] bg-[rgba(201,168,76,0.08)] !border-[var(--accent-gold)]" 
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[rgba(255,255,255,0.04)]"
@@ -61,13 +61,13 @@ export function Sidebar({ shopName }: SidebarProps) {
         <div className="p-6 border-t border-[rgba(255,255,255,0.05)]">
           <div className="bg-[rgba(255,255,255,0.03)] rounded-[12px] p-4 border border-[rgba(255,255,255,0.05)]">
             <div className="flex justify-between items-center mb-3">
-              <span className="text-[12px] font-medium text-[var(--text-secondary)]">Trials Used</span>
-              <span className="text-[12px] font-bold text-[var(--text-primary)]">3 / 10</span>
+              <span className="text-[clamp(10px,2vw,12px)] font-medium text-[var(--text-secondary)]">Trials Used</span>
+              <span className="text-[clamp(10px,2vw,12px)] font-bold text-[var(--text-primary)]">3 / 10</span>
             </div>
             <div className="w-full h-[6px] bg-[rgba(255,255,255,0.06)] rounded-full overflow-hidden">
               <div className="h-full bg-[var(--accent-gold)] rounded-full w-[30%] shadow-[var(--glow-gold)]" />
             </div>
-            <Link href="/dashboard/billing" className="block mt-3 text-[11px] text-[var(--accent-gold)] hover:underline text-center font-medium">
+            <Link href="/dashboard/billing" className="block mt-3 text-[clamp(10px,2vw,12px)] text-[var(--accent-gold)] hover:underline text-center font-medium">
               Upgrade Plan
             </Link>
           </div>
@@ -90,7 +90,7 @@ export function Sidebar({ shopName }: SidebarProps) {
                   <div className="absolute top-0 w-8 h-[2px] bg-[var(--accent-gold)] shadow-[var(--glow-gold)]" />
                 )}
                 <item.icon className={cn("w-5 h-5", isActive ? "text-[var(--accent-gold)]" : "text-[var(--text-muted)]")} />
-                <span className={cn("text-[10px] font-medium", isActive ? "text-[var(--accent-gold)]" : "text-[var(--text-secondary)]")}>
+                <span className={cn("text-[clamp(10px,2vw,12px)] font-medium", isActive ? "text-[var(--accent-gold)]" : "text-[var(--text-secondary)]")}>
                   {item.name}
                 </span>
               </Link>

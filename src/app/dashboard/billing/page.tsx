@@ -97,7 +97,7 @@ export default function BillingPage() {
 
   if (loading) {
     return (
-      <div className="p-8 flex items-center justify-center min-h-[400px]">
+      <div className="p-4 md:p-6 lg:p-8 flex items-center justify-center min-h-[400px]">
         {/* Simple elegant loader */}
         <div className="w-8 h-8 border-[2px] border-[var(--stitch)] border-t-[var(--thread-gold)] rounded-full animate-spin"></div>
       </div>
@@ -120,9 +120,9 @@ export default function BillingPage() {
       {/* SUCCESS MODAL */}
       {successPlan && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--bg-parchment)]/80 backdrop-blur-sm px-6">
-          <FabricCard className="w-full max-w-[400px] text-center py-10 px-8 shadow-2xl">
-            <h2 className="font-[family-name:var(--font-serif)] italic text-[24px] text-[var(--ink-dark)] mb-2">Welcome to {successPlan}</h2>
-            <p className="font-[family-name:var(--font-sans)] font-light text-[14px] text-[var(--ink-mid)] mb-8">
+          <FabricCard className="w-full max-w-full max-w-[400px] text-center py-6 md:py-10 px-4 lg:px-8 shadow-2xl">
+            <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(18px,4.5vw,24px)] text-[var(--ink-dark)] mb-2">Welcome to {successPlan}</h2>
+            <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] mb-8">
               Your atelier has been upgraded successfully. The new limits are now active.
             </p>
             <ThreadButton className="w-full" onClick={() => window.location.reload()}>
@@ -136,18 +136,18 @@ export default function BillingPage() {
         
         {/* PAGE HEADER */}
         <div>
-          <h1 className="font-[family-name:var(--font-serif)] text-[28px] text-[var(--ink-dark)] mb-1">Subscription & Plans</h1>
-          <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)]">Choose the plan that fits your atelier</p>
+          <h1 className="font-[family-name:var(--font-serif)] text-[clamp(20px,5vw,30px)] text-[var(--ink-dark)] mb-1">Subscription & Plans</h1>
+          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">Choose the plan that fits your atelier</p>
         </div>
 
         {/* CURRENT PLAN CARD */}
         <FabricCard className="w-full border-l-[4px] border-l-[var(--thread-gold)] p-0 overflow-hidden">
           <div className="flex flex-col md:flex-row">
             {/* Left Side */}
-            <div className="flex-1 p-8 md:p-10 flex flex-col justify-center">
+            <div className="flex-1 p-4 md:p-6 lg:p-8 md:p-10 flex flex-col justify-center">
               <ChalkLabel className="mb-2">Your Current Plan</ChalkLabel>
-              <h2 className="font-[family-name:var(--font-serif)] text-[22px] text-[var(--ink-dark)] mb-1">{planInfo.name}</h2>
-              <p className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-light)]">
+              <h2 className="font-[family-name:var(--font-serif)] text-[clamp(16px,4vw,20px)] text-[var(--ink-dark)] mb-1">{planInfo.name}</h2>
+              <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-light)]">
                 {shop?.renewal_date ? `Renews on ${new Date(shop.renewal_date).toLocaleDateString()}` : "Free tier · No expiry"}
               </p>
             </div>
@@ -156,9 +156,9 @@ export default function BillingPage() {
             <div className="w-full h-[1px] md:w-[1px] md:h-auto bg-[var(--stitch-strong)] border-none shrink-0" />
             
             {/* Right Side */}
-            <div className="flex-1 p-8 md:p-10 flex flex-col justify-center">
+            <div className="flex-1 p-4 md:p-6 lg:p-8 md:p-10 flex flex-col justify-center">
               <ChalkLabel className="mb-2">Trials Used This Month</ChalkLabel>
-              <div className="font-[family-name:var(--font-mono)] font-light text-[28px] text-[var(--thread-gold)] mb-3">
+              <div className="font-[family-name:var(--font-mono)] font-light text-[clamp(20px,5vw,30px)] text-[var(--thread-gold)] mb-3">
                 {used} / {limit === Infinity ? "∞" : limit}
               </div>
               
@@ -170,7 +170,7 @@ export default function BillingPage() {
                       style={{ width: mounted ? `${usagePercentage}%` : "0%" }}
                     />
                   </div>
-                  <p className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--ink-faint)]">
+                  <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">
                     {remaining} trials remaining
                   </p>
                 </>
@@ -181,7 +181,7 @@ export default function BillingPage() {
 
         {/* PLANS SECTION */}
         <div>
-          <h2 className="font-[family-name:var(--font-serif)] italic text-[20px] text-[var(--ink-dark)] mb-4">Available Plans</h2>
+          <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(16px,4vw,20px)] text-[var(--ink-dark)] mb-4">Available Plans</h2>
           <MeasureDivider />
           
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
@@ -191,20 +191,20 @@ export default function BillingPage() {
               <div className="mb-6">
                 <ChalkLabel className="mb-3 block">Starter</ChalkLabel>
                 <div className="flex items-baseline gap-1">
-                  <span className="font-[family-name:var(--font-mono)] font-light text-[36px] text-[var(--ink-mid)]">{PLANS.free.price}</span>
-                  <span className="font-[family-name:var(--font-sans)] font-light text-[12px] text-[var(--ink-faint)]">/month</span>
+                  <span className="font-[family-name:var(--font-mono)] font-light text-[clamp(22px,6vw,36px)] text-[var(--ink-mid)]">{PLANS.free.price}</span>
+                  <span className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">/month</span>
                 </div>
               </div>
               
               <div className="flex-1 mb-8">
                 <ul className="flex flex-col gap-[8px]">
-                  <li className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] flex items-start gap-2">
+                  <li className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] flex items-start gap-2">
                     <span className="text-[var(--ink-faint)]">—</span> 10 virtual trials per month
                   </li>
-                  <li className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] flex items-start gap-2">
+                  <li className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] flex items-start gap-2">
                     <span className="text-[var(--ink-faint)]">—</span> Standard generation speed
                   </li>
-                  <li className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] flex items-start gap-2">
+                  <li className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] flex items-start gap-2">
                     <span className="text-[var(--ink-faint)]">—</span> Basic email support
                   </li>
                 </ul>
@@ -222,7 +222,7 @@ export default function BillingPage() {
             <div className="relative flex flex-col h-full">
               {/* Floating Banner */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 bg-[var(--bg-card)] rounded-[4px] px-[10px] py-[3px] border border-[var(--thread-gold)] shadow-sm">
-                <span className="font-[family-name:var(--font-sans)] font-light text-[11px] text-[var(--thread-gold)] tracking-widest uppercase">
+                <span className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--thread-gold)] tracking-widest uppercase">
                   Most Popular ✦
                 </span>
               </div>
@@ -231,20 +231,20 @@ export default function BillingPage() {
                 <div className="mb-6">
                   <ChalkLabel className="mb-3 block text-[var(--thread-gold)]">Growing Atelier</ChalkLabel>
                   <div className="flex items-baseline gap-1">
-                    <span className="font-[family-name:var(--font-mono)] font-light text-[36px] text-[var(--ink-dark)]">{PLANS.basic.price}</span>
-                    <span className="font-[family-name:var(--font-sans)] font-light text-[12px] text-[var(--ink-faint)]">/month</span>
+                    <span className="font-[family-name:var(--font-mono)] font-light text-[clamp(22px,6vw,36px)] text-[var(--ink-dark)]">{PLANS.basic.price}</span>
+                    <span className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">/month</span>
                   </div>
                 </div>
                 
                 <div className="flex-1 mb-8">
                   <ul className="flex flex-col gap-[8px]">
-                    <li className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] flex items-start gap-2">
+                    <li className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] flex items-start gap-2">
                       <span className="text-[var(--thread-gold)]">—</span> 100 virtual trials per month
                     </li>
-                    <li className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] flex items-start gap-2">
+                    <li className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] flex items-start gap-2">
                       <span className="text-[var(--thread-gold)]">—</span> Priority generation queue
                     </li>
-                    <li className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] flex items-start gap-2">
+                    <li className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] flex items-start gap-2">
                       <span className="text-[var(--thread-gold)]">—</span> 24/7 dedicated support
                     </li>
                   </ul>
@@ -275,23 +275,23 @@ export default function BillingPage() {
               <div className="mb-6">
                 <ChalkLabel className="mb-3 block text-[var(--fabric-teal)]">Master Atelier</ChalkLabel>
                 <div className="flex items-baseline gap-1">
-                  <span className="font-[family-name:var(--font-mono)] font-light text-[36px] text-[var(--fabric-teal)]">{PLANS.pro.price}</span>
-                  <span className="font-[family-name:var(--font-sans)] font-light text-[12px] text-[var(--ink-faint)]">/month</span>
+                  <span className="font-[family-name:var(--font-mono)] font-light text-[clamp(22px,6vw,36px)] text-[var(--fabric-teal)]">{PLANS.pro.price}</span>
+                  <span className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">/month</span>
                 </div>
               </div>
               
               <div className="flex-1 mb-8">
                 <ul className="flex flex-col gap-[8px]">
-                  <li className="font-[family-name:var(--font-sans)] text-[14px] text-[var(--ink-dark)] font-bold flex items-start gap-2">
+                  <li className="font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] text-[var(--ink-dark)] font-bold flex items-start gap-2">
                     <span className="text-[var(--fabric-teal)] font-normal">—</span> Unlimited trials
                   </li>
-                  <li className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] flex items-start gap-2">
+                  <li className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] flex items-start gap-2">
                     <span className="text-[var(--fabric-teal)]">—</span> Highest priority generation
                   </li>
-                  <li className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] flex items-start gap-2">
+                  <li className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] flex items-start gap-2">
                     <span className="text-[var(--fabric-teal)]">—</span> API access for bulk orders
                   </li>
-                  <li className="font-[family-name:var(--font-sans)] font-light text-[13px] text-[var(--ink-mid)] flex items-start gap-2">
+                  <li className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)] flex items-start gap-2">
                     <span className="text-[var(--fabric-teal)]">—</span> Dedicated account manager
                   </li>
                 </ul>
@@ -307,7 +307,7 @@ export default function BillingPage() {
                   <button 
                     onClick={() => handleUpgrade("pro")}
                     disabled={processingPlan !== null}
-                    className="w-full h-[46px] rounded-[6px] bg-[var(--fabric-teal)] hover:bg-[#1a5555] text-[var(--bg-parchment)] font-[family-name:var(--font-sans)] text-[14px] transition-colors disabled:opacity-50 flex items-center justify-center"
+                    className="w-full h-[46px] rounded-[6px] bg-[var(--fabric-teal)] hover:bg-[#1a5555] text-[var(--bg-parchment)] font-[family-name:var(--font-sans)] text-[clamp(12px,2.5vw,14px)] transition-colors disabled:opacity-50 flex items-center justify-center"
                   >
                     {processingPlan === "pro" ? "Processing..." : "Upgrade to Pro"}
                   </button>

@@ -13,7 +13,7 @@ export const ThreadButton = React.forwardRef<HTMLButtonElement, ThreadButtonProp
         ref={ref}
         disabled={isLoading || props.disabled}
         className={cn(
-          "relative flex items-center justify-center gap-2 rounded-[6px] px-[24px] py-[10px] text-[14px] tracking-[0.04em] transition-all duration-200",
+          "relative flex items-center justify-center gap-2 rounded-[6px] px-[24px] py-[10px] text-[clamp(12px,2.5vw,14px)] tracking-[0.04em] transition-all duration-200",
           "font-[family-name:var(--font-sans)]",
           "active:translate-y-[1px] disabled:opacity-50 disabled:pointer-events-none",
           variant === 'primary' 

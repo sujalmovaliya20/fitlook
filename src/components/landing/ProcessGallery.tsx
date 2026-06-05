@@ -62,18 +62,18 @@ export function ProcessGallery() {
     >
       <div className="relative text-center z-30 mb-12 md:mb-16 mt-[-40px]">
         <h2 
-          className="text-[40px] md:text-[56px] text-white font-light mb-4"
+          className="text-[clamp(22px,6vw,36px)] md:text-[clamp(24px,7vw,48px)] text-white font-light mb-4"
           style={{ fontFamily: '"Cormorant Garamond", serif', textShadow: '0 4px 20px rgba(0,0,0,0.8)' }}
         >
           The Atelier Process
         </h2>
-        <p className="text-[#C9A84C] text-[14px] uppercase tracking-[0.2em] font-light" style={{ fontFamily: '"DM Sans", sans-serif' }}>
+        <p className="text-[#C9A84C] text-[clamp(12px,2.5vw,14px)] uppercase tracking-[0.2em] font-light" style={{ fontFamily: '"DM Sans", sans-serif' }}>
           Step Inside
         </p>
       </div>
 
       {/* Gallery Container */}
-      <div className="w-full max-w-[1200px] px-4 md:px-8 mx-auto z-30">
+      <div className="w-full max-w-[1200px] px-4 md:px-4 lg:px-8 mx-auto z-30">
         <div className="flex flex-row items-center justify-center gap-2 md:gap-4 h-[50vh] md:h-[480px]">
           {steps.map((step, index) => {
             const isActive = activeIndex === index;
@@ -83,7 +83,7 @@ export function ProcessGallery() {
                 onClick={() => setActiveIndex(index)}
                 className={cn(
                   "relative h-full overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] origin-center group",
-                  isActive ? "w-[60%] md:w-[800px]" : "w-[15%] md:w-[100px] hover:w-[20%] md:hover:w-[120px]"
+                  isActive ? "w-[60%] md:w-full max-w-[800px]" : "w-[15%] md:w-[100px] hover:w-[20%] md:hover:w-[120px]"
                 )}
                 style={{ 
                   filter: isActive ? 'grayscale(0%) brightness(100%)' : 'grayscale(50%) brightness(60%)',
@@ -111,16 +111,16 @@ export function ProcessGallery() {
                   "absolute inset-0 flex flex-col justify-end p-6 md:p-12 transition-all duration-500 delay-200",
                   isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
                 )}>
-                  <span className="text-[#C9A84C] text-[10px] md:text-[12px] uppercase tracking-[0.3em] mb-2 md:mb-3 font-light block">
+                  <span className="text-[#C9A84C] text-[clamp(10px,2vw,12px)] md:text-[clamp(10px,2vw,12px)] uppercase tracking-[0.3em] mb-2 md:mb-3 font-light block">
                     Step {step.id}
                   </span>
                   <h3 
-                    className="text-[28px] md:text-[48px] text-white leading-tight mb-2 md:mb-4"
+                    className="text-[clamp(20px,5vw,30px)] md:text-[clamp(24px,7vw,48px)] text-white leading-tight mb-2 md:mb-4"
                     style={{ fontFamily: '"Cormorant Garamond", serif' }}
                   >
                     {step.title}
                   </h3>
-                  <p className="text-white/70 text-[13px] md:text-[15px] font-light max-w-md hidden md:block" style={{ fontFamily: '"DM Sans", sans-serif' }}>
+                  <p className="text-white/70 text-[clamp(12px,2.5vw,14px)] md:text-[clamp(14px,3vw,16px)] font-light max-w-md hidden md:block" style={{ fontFamily: '"DM Sans", sans-serif' }}>
                     {step.subtitle}
                   </p>
                 </div>
@@ -131,7 +131,7 @@ export function ProcessGallery() {
                   !isActive ? "opacity-100" : "opacity-0 pointer-events-none"
                 )}>
                   <span 
-                    className="text-white text-[12px] md:text-[14px] uppercase tracking-[0.3em] font-light whitespace-nowrap -rotate-90 block"
+                    className="text-white text-[clamp(10px,2vw,12px)] md:text-[clamp(12px,2.5vw,14px)] uppercase tracking-[0.3em] font-light whitespace-nowrap -rotate-90 block"
                     style={{ fontFamily: '"DM Sans", sans-serif' }}
                   >
                     {step.title}
@@ -144,7 +144,7 @@ export function ProcessGallery() {
       </div>
       
       {/* Indicator */}
-      <div className="absolute bottom-8 md:bottom-12 text-white/50 text-[13px] tracking-[0.2em] z-30" style={{ fontFamily: '"DM Sans", sans-serif' }}>
+      <div className="absolute bottom-8 md:bottom-12 text-white/50 text-[clamp(12px,2.5vw,14px)] tracking-[0.2em] z-30" style={{ fontFamily: '"DM Sans", sans-serif' }}>
         {activeIndex + 1} — {steps.length}
       </div>
     </section>
