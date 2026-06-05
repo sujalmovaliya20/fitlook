@@ -41,10 +41,10 @@ export function AtelierTopbar() {
     <>
       <header className="h-[64px] bg-[var(--bg-warm-white)] border-b border-[var(--stitch)] flex items-center justify-between px-4 md:px-6 z-30 sticky top-0">
         <div className="flex items-center gap-4">
-          <button onClick={() => setIsSidebarOpen(true)} className="text-[var(--ink-dark)] hover:text-[var(--thread-gold)] transition-colors focus:outline-none">
-            <Menu className="w-6 h-6" />
+          <button onClick={() => setIsSidebarOpen(true)} className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)] transition-colors focus:outline-none">
+            <Menu className="w-5 h-5" />
           </button>
-          <h2 className="text-lg md:text-2xl font-[family-name:var(--font-serif)] text-[var(--ink-dark)] truncate max-w-[200px] sm:max-w-none">
+          <h2 className="page-header-title truncate max-w-[200px] sm:max-w-none">
             Studio Overview
           </h2>
         </div>
@@ -93,14 +93,14 @@ export function AtelierTopbar() {
         <div className="relative w-[260px] h-full bg-[var(--bg-parchment)] border-r border-[var(--stitch)] flex flex-col shadow-2xl animate-in slide-in-from-left duration-300">
           <div className="flex items-center justify-between p-6 border-b border-[var(--stitch)]">
             <div>
-              <h1 className="text-[clamp(16px,4vw,20px)] font-[family-name:var(--font-serif)] italic text-[var(--ink-dark)]">
+              <h1 className="brand-name">
                 FitLook
               </h1>
-              <p className="text-[10px] font-[family-name:var(--font-sans)] font-light text-[var(--ink-light)] uppercase tracking-[0.1em] mt-1">
+              <p className="brand-label mt-1">
                 Navigation
               </p>
             </div>
-            <button onClick={() => setIsSidebarOpen(false)} className="text-[var(--ink-mid)] hover:text-[var(--ink-dark)] transition-colors">
+            <button onClick={() => setIsSidebarOpen(false)} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -111,18 +111,18 @@ export function AtelierTopbar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsSidebarOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-[6px] text-[14px] font-[family-name:var(--font-sans)] text-[var(--ink-mid)] hover:bg-[var(--bg-surface)] hover:text-[var(--ink-dark)] hover:shadow-sm transition-all border border-transparent hover:border-[var(--stitch)]"
+                className="sidebar-nav-item flex items-center gap-3"
               >
-                <item.icon className="w-[18px] h-[18px] text-[var(--thread-gold)] opacity-80" />
+                <item.icon className="w-[18px] h-[18px] text-[var(--accent-gold)] opacity-80" />
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          <div className="p-6 border-t border-[var(--stitch)]">
+          <div className="px-4 mb-6 mt-auto">
             <button 
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 text-[14px] font-[family-name:var(--font-sans)] text-[var(--fabric-red)] hover:bg-[rgba(139,26,26,0.05)] rounded-[6px] transition-colors border border-transparent hover:border-[rgba(139,26,26,0.1)]"
+              className="sidebar-logout"
             >
               <LogOut className="w-[18px] h-[18px]" />
               Logout

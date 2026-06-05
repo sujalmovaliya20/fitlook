@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, DM_Mono, Lato } from "next/font/google";
+import { Cormorant_Garamond, Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -7,23 +7,23 @@ import { InstallPrompt } from "@/components/install-prompt";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { ToastProvider } from "@/components/ui/Toast";
 
-const serif = Playfair_Display({ 
+const serif = Cormorant_Garamond({ 
   subsets: ['latin'], 
-  weight: ['400','500','700'],
+  weight: ['300','400','500','600'],
   style: ['normal','italic'],
   variable: '--font-serif' 
 });
 
-const mono = DM_Mono({ 
+const sans = Inter({ 
   subsets: ['latin'], 
-  weight: ['300','400'],
-  variable: '--font-mono'
+  weight: ['400','500','600'],
+  variable: '--font-sans'
 });
 
-const sans = Lato({ 
+const labelFont = Montserrat({ 
   subsets: ['latin'], 
-  weight: ['300','400','700'],
-  variable: '--font-sans' 
+  weight: ['400','500','600'],
+  variable: '--font-label-sys' 
 });
 
 export const metadata: Metadata = {
@@ -59,7 +59,7 @@ export default function RootLayout({
           "min-h-screen antialiased",
           serif.variable,
           sans.variable,
-          mono.variable
+          labelFont.variable
         )}
       >
         <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('/noise.svg')]" />

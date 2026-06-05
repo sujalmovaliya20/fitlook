@@ -1,10 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { FabricCard } from "@/components/tailor/FabricCard";
-import { ChalkLabel } from "@/components/tailor/ChalkLabel";
-import { MeasurementBadge } from "@/components/tailor/MeasurementBadge";
 import { MeasureDivider } from "@/components/tailor/MeasureDivider";
-import { ThreadButton } from "@/components/tailor/ThreadButton";
 
 export default async function DashboardHome() {
   const supabase = await createClient();
@@ -61,11 +58,11 @@ export default async function DashboardHome() {
       
       {/* GREETING SECTION */}
       <div className="relative">
-        <ChalkLabel>Today's Atelier</ChalkLabel>
-        <h1 className="font-[family-name:var(--font-serif)] text-[clamp(20px,5vw,30px)] text-[var(--ink-dark)] mt-2 mb-1">
+        <h3 className="section-label">Today's Atelier</h3>
+        <h1 className="greeting-text mb-1">
           {greeting}, {ownerName}.
         </h1>
-        <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">
+        <p className="date-text">
           {formattedDate} &nbsp;&mdash;&nbsp; Ahmedabad
         </p>
 
@@ -81,36 +78,36 @@ export default async function DashboardHome() {
 
       {/* STATS ROW */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <FabricCard className="border-l-[3px] border-l-[var(--thread-gold)] pl-5 flex flex-col gap-3">
-          <ChalkLabel>Trials Today</ChalkLabel>
-          <MeasurementBadge value={todayCount} size="lg" />
-          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-light)]">+2 from yesterday</p>
-        </FabricCard>
+        <div className="stat-card-container flex flex-col">
+          <p className="stat-card-label">Trials Today</p>
+          <p className="stat-card-number">{todayCount}</p>
+          <p className="stat-card-subtext">+2 from yesterday</p>
+        </div>
 
-        <FabricCard className="border-l-[3px] border-l-[var(--fabric-teal)] pl-5 flex flex-col gap-3">
-          <ChalkLabel>Trials This Month</ChalkLabel>
-          <MeasurementBadge value={monthCount} size="lg" />
-          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-light)]">15% up this month</p>
-        </FabricCard>
+        <div className="stat-card-container flex flex-col">
+          <p className="stat-card-label">Trials This Month</p>
+          <p className="stat-card-number">{monthCount}</p>
+          <p className="stat-card-subtext">15% up this month</p>
+        </div>
 
-        <FabricCard className="border-l-[3px] border-l-[var(--fabric-red)] pl-5 flex flex-col gap-3">
-          <ChalkLabel>Satisfaction Score</ChalkLabel>
-          <MeasurementBadge value="4.9" size="lg" />
-          <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-light)]">Based on 42 reviews</p>
-        </FabricCard>
+        <div className="stat-card-container flex flex-col">
+          <p className="stat-card-label">Satisfaction Score</p>
+          <p className="stat-card-number">4.9</p>
+          <p className="stat-card-subtext">Based on 42 reviews</p>
+        </div>
       </div>
 
       {/* ACTIVITY SECTION */}
       <div>
-        <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(15px,3.5vw,18px)] text-[var(--ink-dark)] mb-4">Today's work</h2>
+        <h2 className="section-title mb-4">Today's work</h2>
         <MeasureDivider />
         
         <div className="mt-6 flex flex-col gap-3">
           {todayTrials.length === 0 ? (
             <div className="py-12 flex flex-col items-center justify-center gap-4 border border-dashed border-[var(--ink-faint)] rounded-[12px] bg-[var(--bg-surface)]">
-              <p className="font-[family-name:var(--font-serif)] italic text-[clamp(14px,3vw,16px)] text-[var(--ink-light)]">The day is fresh. Start your first trial.</p>
-              <Link href="/dashboard/new-trial">
-                <ThreadButton variant="ghost">Begin a new trial &rarr;</ThreadButton>
+              <p className="empty-state-text">The day is fresh. Start your first trial.</p>
+              <Link href="/dashboard/new-trial" className="cta-button">
+                Begin a new trial &rarr;
               </Link>
             </div>
           ) : (
@@ -133,14 +130,12 @@ export default async function DashboardHome() {
           }}
         />
         
-        <h3 className="font-[family-name:var(--font-serif)] text-[clamp(16px,4vw,20px)] text-[var(--bg-parchment)] relative z-10">
+        <h3 className="bottom-banner-text relative z-10">
           Ready for your next customer?
         </h3>
         
-        <Link href="/dashboard/new-trial" className="relative z-10">
-          <ThreadButton className="bg-[var(--bg-parchment)] text-[var(--ink-dark)] hover:bg-[var(--bg-surface)] hover:text-[var(--ink-dark)] border-[var(--bg-parchment)]">
-            Start New Trial &rarr;
-          </ThreadButton>
+        <Link href="/dashboard/new-trial" className="bottom-banner-btn relative z-10">
+          Start New Trial &rarr;
         </Link>
       </div>
 

@@ -34,32 +34,48 @@ img, video, canvas {
     --font-sans: var(--font-sans);
   }
   :root {
-    /* warm paper backgrounds */
-    --bg-parchment:  #F7F3EE;
-    --bg-warm-white: #FDFAF6;
-    --bg-surface:    #F0EBE3;
-    --bg-card:       #FFFFFF;
-    --bg-deep:       #2C1A0E;
+    --font-heading: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
+    --font-body: var(--font-sans), 'Inter', -apple-system, sans-serif;
+    --font-label: var(--font-label-sys), 'Montserrat', sans-serif;
 
-    /* tailor ink & thread colors */
-    --ink-dark:      #1C1209;
-    --ink-mid:       #5C4A3A;
-    --ink-light:     #9C8878;
-    --ink-faint:     #C8BDB4;
+    /* Backgrounds */
+    --bg-primary: #f7f3ec;
+    --bg-sidebar: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #faf8f4;
+    --bg-dark: #1c1917;
 
-    /* accent — saffron thread */
-    --thread-gold:   #B8860B;
-    --thread-saffron:#D4762A;
-    --thread-muted:  rgba(184,134,11,0.12);
+    /* Text */
+    --text-primary: #1a1714;
+    --text-secondary: #4a4540;
+    --text-muted: #8a817a;
+    --text-inverse: #f7f3ec;
 
-    /* fabric accent colors */
-    --fabric-red:    #8B1A1A;
-    --fabric-teal:   #1A5C5C;
-    --fabric-cream:  #E8DFD0;
+    /* Accent */
+    --accent-gold: #b8962e;
+    --accent-gold-light: #d4aa4a;
+    --accent-gold-bg: #fdf8ed;
+    --accent-border: #e8dcc8;
 
-    /* borders */
-    --stitch:        rgba(28,18,9,0.1);
-    --stitch-strong: rgba(28,18,9,0.2);
+    /* Status */
+    --color-success: #3d6b4f;
+    --color-warning: #c17d2a;
+    --color-error: #8b2e2e;
+
+    /* Legacy mapping for components */
+    --bg-parchment: var(--bg-primary);
+    --bg-warm-white: var(--bg-card);
+    --bg-surface: var(--bg-card-hover);
+    --bg-deep: var(--bg-dark);
+    --ink-dark: var(--text-primary);
+    --ink-mid: var(--text-secondary);
+    --ink-light: var(--text-muted);
+    --ink-faint: var(--accent-border);
+    --thread-gold: var(--accent-gold);
+    --fabric-red: var(--color-error);
+    --fabric-teal: var(--color-success);
+    --stitch: var(--accent-border);
+    --stitch-strong: var(--accent-gold);
 
     /* Shadcn OKLCH (preserved but mapped to dark ink for defaults) */
     --background: oklch(0.975 0.005 90);
@@ -134,10 +150,13 @@ img, video, canvas {
     outline-color: var(--ring);
   }
   body {
-    background: var(--bg-parchment);
-    color: var(--ink-dark);
-    font-family: var(--font-sans), sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   body::before {
     content: '';
@@ -148,7 +167,6 @@ img, video, canvas {
     z-index: 9999;
   }
   html {
-    @apply font-sans;
     scroll-behavior: smooth;
   }
 
@@ -161,17 +179,235 @@ img, video, canvas {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(201, 168, 76, 0.3);
-    border-radius: 10px;
+    background: var(--accent-border);
+    border-radius: 999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(201, 168, 76, 0.6);
+    background: var(--accent-gold-light);
   }
 
   /* Custom Focus State */
   *:focus-visible {
-    outline: none !important;
-    box-shadow: 0 0 0 2px var(--bg-deep), 0 0 0 4px var(--accent-gold) !important;
+    outline: 2px solid var(--accent-gold) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Selection color */
+  ::selection {
+    background: var(--accent-gold-bg);
+    color: var(--text-primary);
+  }
+
+  /* Global Classes from user request */
+  .sidebar-nav-item {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.01em;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+  }
+
+  .sidebar-nav-item:hover {
+    color: var(--text-primary);
+    background: var(--accent-gold-bg);
+  }
+
+  .sidebar-nav-item.active {
+    color: var(--accent-gold);
+    background: var(--accent-gold-bg);
+    font-weight: 600;
+    border-left: 2px solid var(--accent-gold);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .brand-name {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+  }
+
+  .brand-label {
+    font-family: var(--font-label);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .page-header-title {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .section-label {
+    font-family: var(--font-label);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .greeting-text {
+    font-family: var(--font-heading);
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .date-text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    margin-top: 6px;
+  }
+
+  .stat-card-container {
+    background: var(--bg-card);
+    border: 1px solid var(--accent-border);
+    border-left: 3px solid var(--accent-gold);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .stat-card-label {
+    font-family: var(--font-label);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .stat-card-number {
+    font-family: var(--font-heading);
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--accent-gold);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-card-subtext {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+
+  .empty-state-text {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .cta-button {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+    border: 1.5px solid var(--text-primary);
+    border-radius: 6px;
+    padding: 10px 24px;
+    background: transparent;
+    transition: all 0.2s ease;
+    text-transform: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cta-button:hover {
+    background: var(--text-primary);
+    color: var(--text-inverse);
+  }
+
+  .bottom-banner-text {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 400;
+    color: #f7f3ec;
+    letter-spacing: 0.01em;
+  }
+
+  .bottom-banner-btn {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    background: #f7f3ec;
+    color: #1c1917;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+  }
+  .bottom-banner-btn:hover {
+    opacity: 0.9;
+  }
+
+  .sidebar-footer-label {
+    font-family: var(--font-label);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .sidebar-footer-count {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .sidebar-logout {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.15s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+  }
+  .sidebar-logout:hover {
+    color: var(--color-error);
   }
 
   @keyframes pulse-ring {
