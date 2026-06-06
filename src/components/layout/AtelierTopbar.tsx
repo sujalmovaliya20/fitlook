@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { User, LogOut, Menu, X, Home, PlusCircle, History, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -93,7 +94,7 @@ export function AtelierTopbar() {
         <div className="relative w-[260px] h-full bg-[var(--bg-parchment)] border-r border-[var(--stitch)] flex flex-col shadow-2xl animate-in slide-in-from-left duration-300">
           <div className="flex items-center justify-between p-6 border-b border-[var(--stitch)]">
             <div className="flex gap-3 items-center">
-              <img src="/logo.png" alt="FitLook Logo" className="w-10 h-10 object-cover rounded-md shadow-sm border border-[var(--accent-border)] bg-[var(--bg-card)]" />
+              <Image src="/logo.png" alt="FitLook Logo" width={40} height={40} priority className="object-cover rounded-md shadow-sm border border-[var(--accent-border)] bg-[var(--bg-card)]" />
               <div>
                 <h1 className="brand-name">
                   FitLook

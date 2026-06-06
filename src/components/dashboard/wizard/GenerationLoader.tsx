@@ -27,16 +27,19 @@ export function GenerationLoader() {
   useEffect(() => {
     const startTime = Date.now();
     const duration = 30000; // 30s
+    let frameId: number;
 
     const updateProgress = () => {
       const elapsed = Date.now() - startTime;
       const percentage = Math.min(90, (elapsed / duration) * 90);
       setProgress(percentage);
       if (percentage < 90) {
-        requestAnimationFrame(updateProgress);
+        frameId = requestAnimationFrame(updateProgress);
       }
     };
-    requestAnimationFrame(updateProgress);
+    frameId = requestAnimationFrame(updateProgress);
+
+    return () => cancelAnimationFrame(frameId);
   }, []);
 
   // Canvas Particles
@@ -90,7 +93,7 @@ export function GenerationLoader() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
       window.removeEventListener("resize", handleResize);

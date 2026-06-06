@@ -6,10 +6,14 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { NavBar } from '@/components/landing/NavBar';
 import { ExteriorSection } from '@/components/landing/ExteriorSection';
-import { CTASection } from '@/components/landing/CTASection';
 
 const TailorInterior = dynamic(
   () => import('@/components/landing/TailorInterior').then((mod) => mod.TailorInterior),
+  { ssr: false }
+);
+
+const CTASection = dynamic(
+  () => import('@/components/landing/CTASection').then((mod) => mod.CTASection),
   { ssr: false }
 );
 

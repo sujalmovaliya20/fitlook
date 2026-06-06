@@ -20,7 +20,7 @@ export function ParticleFooterCanvas() {
       canvas.height = canvas.parentElement?.clientHeight || 400;
     };
     
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", resize, { passive: true });
     resize();
 
     for (let i = 0; i < particleCount; i++) {

@@ -22,20 +22,22 @@ export default function ProfilePage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    let isMounted = true;
     async function loadShop() {
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
+      if (user && isMounted) {
         setUserEmail(user.email || "");
         const { data } = await supabase
           .from("shops")
           .select("*")
           .eq("id", user.id)
           .single();
-        if (data) setShop(data);
+        if (data && isMounted) setShop(data);
       }
-      setLoading(false);
+      if (isMounted) setLoading(false);
     }
     loadShop();
+    return () => { isMounted = false; };
   }, [supabase]);
 
   const handleProfileUpdate = async (formData: FormData) => {

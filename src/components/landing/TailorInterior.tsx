@@ -5,6 +5,29 @@ import { useVideoTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import Link from 'next/link';
 import { Scissors } from 'lucide-react';
+import { getDeviceProfile } from '@/lib/deviceDetect';
+import { useThree } from '@react-three/fiber';
+
+function PerformanceMonitor() {
+  const { gl, scene, camera } = useThree();
+  const profile = getDeviceProfile();
+
+  React.useEffect(() => {
+    if (profile === 'low') {
+      gl.setAnimationLoop(null);
+      let lastTime = 0;
+      const fps30 = 1000 / 30;
+      gl.setAnimationLoop((time) => {
+        if (time - lastTime >= fps30) {
+          lastTime = time;
+          gl.render(scene, camera);
+        }
+      });
+    }
+  }, [gl, profile, scene, camera]);
+
+  return null;
+}
 
 function BackgroundVideo() {
   const texture = useVideoTexture('/cinematic_close_up.mp4', {
@@ -82,6 +105,17 @@ function Scene({ progress }: { progress: number }) {
     }
   });
 
+  React.useEffect(() => {
+    return () => {
+      if (particlesRef.current) {
+        particlesRef.current.geometry?.dispose();
+        if (particlesRef.current.material) {
+          (particlesRef.current.material as THREE.Material).dispose();
+        }
+      }
+    };
+  }, []);
+
   return (
     <>
       <ambientLight intensity={0.6} color="#FFF5E6" />
@@ -115,9 +149,16 @@ export function TailorInterior({ progress }: { progress: number }) {
   React.useEffect(() => {
     setIsMobile(window.innerWidth < 768);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const profile = getDeviceProfile();
+  const canvasConfig = {
+    low:  { dpr: 1,      shadows: false, antialias: false },
+    mid:  { dpr: [1, 1.5], shadows: false, antialias: true  },
+    high: { dpr: [1, 2],   shadows: true,  antialias: true  },
+  }[profile] || { dpr: [1, 2], shadows: true, antialias: true };
 
   return (
     <section
@@ -130,11 +171,19 @@ export function TailorInterior({ progress }: { progress: number }) {
     >
       <Canvas
         style={{ width: '100%', height: '100%' }}
-        shadows
+        shadows={canvasConfig.shadows}
         camera={{ position: [0, 1.5, 5], fov: isMobile ? 65 : 50 }}
-        gl={{ antialias: true }}
-        dpr={isMobile ? 1 : (typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 2) : 2)}
+        gl={{ 
+          antialias: canvasConfig.antialias,
+          powerPreference: 'high-performance',
+          alpha: false,
+          stencil: false,
+          depth: true,
+        }}
+        dpr={canvasConfig.dpr as any}
+        performance={{ min: 0.5 }}
       >
+        <PerformanceMonitor />
         <Scene progress={progress} />
       </Canvas>
 

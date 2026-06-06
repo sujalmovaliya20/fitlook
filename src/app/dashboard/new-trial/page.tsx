@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { useToast } from "@/components/ui/Toast";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 import { ChalkLabel } from "@/components/tailor/ChalkLabel";
 import { FabricCard } from "@/components/tailor/FabricCard";
@@ -239,7 +240,7 @@ export default function NewTrialPage() {
             )}>
               {fabricPreview ? (
                 <>
-                  <img src={fabricPreview} className="absolute inset-0 w-full h-full object-contain p-2 max-w-full h-auto" alt="Fabric" />
+                  <Image src={fabricPreview} unoptimized fill className="object-contain p-2" alt="Fabric" />
                   <div className="absolute top-3 right-3 bg-[var(--ink-dark)] text-[var(--bg-parchment)] px-3 py-1 rounded-full font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] shadow-sm flex items-center gap-1.5 z-10">
                     <span className="text-[clamp(10px,2vw,12px)]">✓</span> Fabric captured
                   </div>
@@ -293,7 +294,7 @@ export default function NewTrialPage() {
             )}>
               {customerPreview ? (
                 <>
-                  <img src={customerPreview} className="absolute inset-0 w-full h-full object-contain p-2 max-w-full h-auto" alt="Customer" />
+                  <Image src={customerPreview} unoptimized fill className="object-contain p-2" alt="Customer" />
                   <div className="absolute top-3 right-3 bg-[var(--ink-dark)] text-[var(--bg-parchment)] px-3 py-1 rounded-full font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] shadow-sm flex items-center gap-1.5 z-10">
                     <span className="text-[clamp(10px,2vw,12px)]">✓</span> Customer captured
                   </div>

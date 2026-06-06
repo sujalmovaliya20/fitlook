@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 import { Home, PlusCircle, History, CreditCard, Settings, LogOut, User } from 'lucide-react';
 
 export function AtelierSidebar() {
@@ -28,7 +29,7 @@ export function AtelierSidebar() {
   return (
     <aside className="fixed inset-y-0 left-0 w-[240px] bg-[var(--bg-parchment)] border-r border-[var(--stitch)] hidden md:flex flex-col z-40">
       <div className="p-6 flex gap-3 items-center">
-        <img src="/logo.png" alt="FitLook Logo" className="w-10 h-10 object-cover rounded-md shadow-sm border border-[var(--accent-border)] bg-[var(--bg-card)]" />
+        <Image src="/logo.png" alt="FitLook Logo" width={40} height={40} priority className="object-cover rounded-md shadow-sm border border-[var(--accent-border)] bg-[var(--bg-card)]" />
         <div>
           <h1 className="brand-name mb-1">
             FitLook

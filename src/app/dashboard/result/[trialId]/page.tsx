@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useToast } from "@/components/ui/Toast";
 
@@ -208,8 +209,11 @@ export default function ResultPage() {
           {/* The Mirror Frame & Image */}
           <div className="relative border-[8px] border-[var(--fabric-cream)] rounded-[4px] shadow-2xl bg-black">
             <div className="absolute inset-0 border-[2px] border-[rgba(255,255,255,0.1)] rounded-[2px] pointer-events-none z-10" />
-            <img 
+            <Image 
               src={trial!.result_image_url} 
+              width={800}
+              height={1200}
+              priority
               className="w-full object-cover max-h-[70vh] rounded-[2px] block" 
               alt="Tailor generated result"
             />
