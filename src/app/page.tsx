@@ -25,23 +25,30 @@ export default function Home() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     
-    // Initialize Lenis for buttery smooth scrolling, especially on mobile touch
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2, // Enhances mobile scroll feeling
-    });
+    // 1. Prevent GSAP from recalculating on mobile URL bar hide/show
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
-    lenis.on('scroll', ScrollTrigger.update);
+    const isMobileDevice = typeof window !== 'undefined' && 
+      (window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent));
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0);
+    let lenis: any = null;
+    
+    // 2. Only initialize Lenis for Web/Desktop. 
+    // Mobile native touch scrolling is hardware accelerated and JS scrolling (Lenis) 
+    // can cause massive battery drain and CPU lag on low-end mobile.
+    if (!isMobileDevice) {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+      });
+
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    }
 
     let st: globalThis.ScrollTrigger | null = null;
     if (containerRef.current) {
@@ -49,7 +56,8 @@ export default function Home() {
         trigger: containerRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: 1,
+        // 3. Add easing to the scrub specifically for mobile so chunked native scroll events interpolate smoothly
+        scrub: isMobileDevice ? 0.8 : 1, 
         onUpdate: (self) => {
           setProgress(self.progress);
         }
@@ -58,7 +66,7 @@ export default function Home() {
 
     return () => {
       if (st) st.kill();
-      lenis.destroy();
+      if (lenis) lenis.destroy();
     };
   }, []);
 
