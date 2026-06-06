@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
 import { NavBar } from '@/components/landing/NavBar';
 import { ExteriorSection } from '@/components/landing/ExteriorSection';
 
@@ -24,8 +25,27 @@ export default function Home() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     
+    // Initialize Lenis for buttery smooth scrolling, especially on mobile touch
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2, // Enhances mobile scroll feeling
+    });
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    let st: globalThis.ScrollTrigger | null = null;
     if (containerRef.current) {
-      const st = ScrollTrigger.create({
+      st = ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top top",
         end: "bottom bottom",
@@ -34,10 +54,12 @@ export default function Home() {
           setProgress(self.progress);
         }
       });
-      return () => {
-        st.kill();
-      };
     }
+
+    return () => {
+      if (st) st.kill();
+      lenis.destroy();
+    };
   }, []);
 
   // Door flash transition (30% to 40%)
