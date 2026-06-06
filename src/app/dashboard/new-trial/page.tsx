@@ -237,7 +237,7 @@ export default function NewTrialPage() {
               "flex flex-col items-center justify-center min-h-[240px] bg-[var(--bg-surface)] border-2 border-dashed border-[var(--stitch-strong)] rounded-[8px] cursor-pointer transition-all duration-200 overflow-hidden relative",
               "hover:border-[var(--thread-gold)] hover:bg-[var(--thread-muted)]"
             )}>
-              <input type="file" accept="image/*" className="hidden" onChange={handleFabricSelect} />
+              <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFabricSelect} />
               
               {fabricPreview ? (
                 <>
@@ -272,7 +272,7 @@ export default function NewTrialPage() {
               "flex flex-col items-center justify-center min-h-[240px] bg-[var(--bg-surface)] border-2 border-dashed border-[var(--stitch-strong)] rounded-[8px] cursor-pointer transition-all duration-200 overflow-hidden relative",
               "hover:border-[var(--thread-gold)] hover:bg-[var(--thread-muted)]"
             )}>
-              <input type="file" accept="image/*" className="hidden" onChange={handleCustomerSelect} />
+              <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleCustomerSelect} />
               
               {customerPreview ? (
                 <>

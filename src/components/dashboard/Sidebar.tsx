@@ -25,7 +25,7 @@ export function Sidebar({ shopName }: SidebarProps) {
       {/* Desktop Sidebar (hidden on mobile) */}
       <div className="w-[240px] flex-shrink-0 bg-[#0E0E15] border-r border-[rgba(255,255,255,0.05)] h-screen hidden md:flex flex-col sticky top-0">
         <div className="p-6 pb-8 border-b border-[rgba(255,255,255,0.05)]">
-          <Link href="/dashboard" className="flex items-center gap-2 mb-2 group">
+          <Link href="/" className="flex items-center gap-2 mb-2 group">
             <Scissors className="h-6 w-6 text-[var(--accent-gold)] group-hover:scale-110 transition-transform duration-300" />
             <span className="text-2xl font-[family-name:var(--font-display)] tracking-widest text-[var(--accent-gold)] uppercase">
               FitLook
