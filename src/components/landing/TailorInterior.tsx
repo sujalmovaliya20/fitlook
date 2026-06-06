@@ -1,19 +1,24 @@
 "use client";
 import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
+import { useVideoTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import Link from 'next/link';
 import { Scissors } from 'lucide-react';
-function BackgroundImage() {
-  const texture = useTexture('/atelier_interior_ultra.png');
+
+function BackgroundVideo() {
+  const texture = useVideoTexture('/cinematic_close_up.mp4', {
+    loop: true,
+    muted: true,
+    start: true,
+  });
   texture.colorSpace = THREE.SRGBColorSpace;
 
   return (
     <mesh position={[0, 1.5, -8]}>
-      {/* Aspect ratio of generated image is usually 1:1, so width=height. Let's make it large enough to cover the camera's FOV. */}
-      <planeGeometry args={[25, 25]} />
-      <meshBasicMaterial map={texture} depthWrite={false} />
+      {/* 16:9 Aspect Ratio for the video */}
+      <planeGeometry args={[32, 18]} />
+      <meshBasicMaterial map={texture} depthWrite={false} toneMapped={false} />
     </mesh>
   );
 }
@@ -83,9 +88,9 @@ function Scene({ progress }: { progress: number }) {
       <pointLight position={[0, 4, 0]} intensity={1.5} color="#ffffff" />
       <pointLight ref={pointLightRef} color="#FFD700" intensity={0.8} />
 
-      {/* Realistic Background Image */}
+      {/* Cinematic Background Video */}
       <Suspense fallback={null}>
-        <BackgroundImage />
+        <BackgroundVideo />
       </Suspense>
 
 
