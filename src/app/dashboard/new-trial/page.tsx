@@ -233,30 +233,49 @@ export default function NewTrialPage() {
               <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">Photograph the cloth your customer has chosen.</p>
             </div>
 
-            <label className={cn(
-              "flex flex-col items-center justify-center min-h-[240px] bg-[var(--bg-surface)] border-2 border-dashed border-[var(--stitch-strong)] rounded-[8px] cursor-pointer transition-all duration-200 overflow-hidden relative",
+            <div className={cn(
+              "flex flex-col items-center justify-center min-h-[240px] bg-[var(--bg-surface)] border-2 border-dashed border-[var(--stitch-strong)] rounded-[8px] transition-all duration-200 overflow-hidden relative",
               "hover:border-[var(--thread-gold)] hover:bg-[var(--thread-muted)]"
             )}>
-              <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFabricSelect} />
-              
               {fabricPreview ? (
                 <>
                   <img src={fabricPreview} className="absolute inset-0 w-full h-full object-contain p-2 max-w-full h-auto" alt="Fabric" />
                   <div className="absolute top-3 right-3 bg-[var(--ink-dark)] text-[var(--bg-parchment)] px-3 py-1 rounded-full font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] shadow-sm flex items-center gap-1.5 z-10">
                     <span className="text-[clamp(10px,2vw,12px)]">✓</span> Fabric captured
                   </div>
+                  <label className="absolute bottom-4 bg-[var(--bg-surface)] border border-[var(--stitch)] px-4 py-2 rounded-[6px] shadow-sm cursor-pointer hover:border-[var(--thread-gold)] z-10 transition-colors">
+                    <input type="file" accept="image/*" className="hidden" onChange={handleFabricSelect} />
+                    <span className="font-[family-name:var(--font-sans)] text-[12px] text-[var(--ink-dark)] font-medium">Change Photo</span>
+                  </label>
                 </>
               ) : (
-                <div className="flex flex-col items-center gap-3">
+                <div className="flex flex-col items-center gap-3 w-full px-6">
                   <div className="relative w-[40px] h-[40px]">
                     <div className="absolute inset-0 bg-[var(--fabric-teal)] border border-[var(--stitch)] transform -rotate-6 shadow-sm rounded-[2px]"></div>
                     <div className="absolute inset-0 bg-[var(--thread-saffron)] border border-[var(--stitch)] transform rotate-6 opacity-90 shadow-sm rounded-[2px]"></div>
                   </div>
-                  <p className="font-[family-name:var(--font-serif)] text-[clamp(14px,3vw,16px)] text-[var(--ink-mid)] mt-3">Tap to photograph fabric</p>
-                  <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">JPG or PNG · Clear, flat lay preferred</p>
+                  
+                  <div className="flex gap-3 w-full mt-2 relative z-10">
+                    <label className="flex-1 bg-[var(--bg-warm-white)] border border-[var(--stitch-strong)] py-2.5 rounded-[6px] text-center cursor-pointer hover:border-[var(--thread-gold)] transition-colors shadow-sm flex flex-col items-center justify-center gap-1">
+                      <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFabricSelect} />
+                      <svg className="w-4 h-4 text-[var(--ink-mid)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span className="font-[family-name:var(--font-sans)] text-[11px] text-[var(--ink-dark)] font-medium">Take Photo</span>
+                    </label>
+                    <label className="flex-1 bg-[var(--bg-warm-white)] border border-[var(--stitch-strong)] py-2.5 rounded-[6px] text-center cursor-pointer hover:border-[var(--thread-gold)] transition-colors shadow-sm flex flex-col items-center justify-center gap-1">
+                      <input type="file" accept="image/*" className="hidden" onChange={handleFabricSelect} />
+                      <svg className="w-4 h-4 text-[var(--ink-mid)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                      </svg>
+                      <span className="font-[family-name:var(--font-sans)] text-[11px] text-[var(--ink-dark)] font-medium">Upload File</span>
+                    </label>
+                  </div>
+                  <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)] mt-2 text-center">JPG or PNG · Clear, flat lay preferred</p>
                 </div>
               )}
-            </label>
+            </div>
           </div>
         )}
 
@@ -268,32 +287,51 @@ export default function NewTrialPage() {
               <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(12px,2.5vw,14px)] text-[var(--ink-mid)]">We need a full-body photo to map the fabric accurately.</p>
             </div>
 
-            <label className={cn(
-              "flex flex-col items-center justify-center min-h-[240px] bg-[var(--bg-surface)] border-2 border-dashed border-[var(--stitch-strong)] rounded-[8px] cursor-pointer transition-all duration-200 overflow-hidden relative",
+            <div className={cn(
+              "flex flex-col items-center justify-center min-h-[240px] bg-[var(--bg-surface)] border-2 border-dashed border-[var(--stitch-strong)] rounded-[8px] transition-all duration-200 overflow-hidden relative",
               "hover:border-[var(--thread-gold)] hover:bg-[var(--thread-muted)]"
             )}>
-              <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleCustomerSelect} />
-              
               {customerPreview ? (
                 <>
                   <img src={customerPreview} className="absolute inset-0 w-full h-full object-contain p-2 max-w-full h-auto" alt="Customer" />
                   <div className="absolute top-3 right-3 bg-[var(--ink-dark)] text-[var(--bg-parchment)] px-3 py-1 rounded-full font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] shadow-sm flex items-center gap-1.5 z-10">
                     <span className="text-[clamp(10px,2vw,12px)]">✓</span> Customer captured
                   </div>
+                  <label className="absolute bottom-4 bg-[var(--bg-surface)] border border-[var(--stitch)] px-4 py-2 rounded-[6px] shadow-sm cursor-pointer hover:border-[var(--thread-gold)] z-10 transition-colors">
+                    <input type="file" accept="image/*" className="hidden" onChange={handleCustomerSelect} />
+                    <span className="font-[family-name:var(--font-sans)] text-[12px] text-[var(--ink-dark)] font-medium">Change Photo</span>
+                  </label>
                 </>
               ) : (
-                <div className="flex flex-col items-center gap-3">
+                <div className="flex flex-col items-center gap-3 w-full px-6">
                   <div className="w-[40px] h-[40px] flex items-center justify-center opacity-60">
                     <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" strokeWidth="1.5">
                       <circle cx="12" cy="7" r="4" />
                       <path d="M5 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2" />
                     </svg>
                   </div>
-                  <p className="font-[family-name:var(--font-serif)] text-[clamp(14px,3vw,16px)] text-[var(--ink-mid)] mt-1">Tap to photograph customer</p>
-                  <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)]">Front-facing, full height</p>
+                  
+                  <div className="flex gap-3 w-full mt-2 relative z-10">
+                    <label className="flex-1 bg-[var(--bg-warm-white)] border border-[var(--stitch-strong)] py-2.5 rounded-[6px] text-center cursor-pointer hover:border-[var(--thread-gold)] transition-colors shadow-sm flex flex-col items-center justify-center gap-1">
+                      <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleCustomerSelect} />
+                      <svg className="w-4 h-4 text-[var(--ink-mid)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span className="font-[family-name:var(--font-sans)] text-[11px] text-[var(--ink-dark)] font-medium">Take Photo</span>
+                    </label>
+                    <label className="flex-1 bg-[var(--bg-warm-white)] border border-[var(--stitch-strong)] py-2.5 rounded-[6px] text-center cursor-pointer hover:border-[var(--thread-gold)] transition-colors shadow-sm flex flex-col items-center justify-center gap-1">
+                      <input type="file" accept="image/*" className="hidden" onChange={handleCustomerSelect} />
+                      <svg className="w-4 h-4 text-[var(--ink-mid)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                      </svg>
+                      <span className="font-[family-name:var(--font-sans)] text-[11px] text-[var(--ink-dark)] font-medium">Upload File</span>
+                    </label>
+                  </div>
+                  <p className="font-[family-name:var(--font-sans)] font-light text-[clamp(10px,2vw,12px)] text-[var(--ink-faint)] mt-2 text-center">Front-facing, full height</p>
                 </div>
               )}
-            </label>
+            </div>
 
             <FabricCard className="border-l-[3px] border-l-[var(--fabric-teal)] pl-5 py-4">
               <ChalkLabel className="mb-1 text-[var(--fabric-teal)]">Tailor's Tip</ChalkLabel>
