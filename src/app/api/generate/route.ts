@@ -43,8 +43,9 @@ export async function POST(req: Request) {
     });
 
     const formattedGarmentType = garmentType.replace(/-/g, ' ');
-    const prompt = `Shape it into a ${formattedGarmentType}`;
-    const negativePrompt = "blurry, low quality, distorted, bad proportions, watermark, hands, people, solid color, plain color";
+    // Strongly enforce color and pattern retention in CosXL so it doesn't default to skyblue
+    const prompt = `Transform this fabric into a flat-lay ${formattedGarmentType}. CRITICAL: You must preserve the EXACT same color, pattern, and texture as the original fabric image. Do not change the original color.`;
+    const negativePrompt = "different color, skyblue, blue, gray, person, wearing, background, 3d, illustration, low quality, distorted, bad proportions, watermark";
 
     const fabricBlob = new Blob([Buffer.from(fabricBase64, "base64")], { type: "image/png" });
 
@@ -77,7 +78,7 @@ export async function POST(req: Request) {
     const result = await idmClient.predict("/tryon", [
       { background: humanBlob, layers: [], composite: null }, // Human image for auto-masking
       generatedGarmentBlob, // Use the generated garment instead of the raw fabric!
-      `${formattedGarmentType} made from the fabric`, 
+      `A highly detailed ${formattedGarmentType}, preserving the exact color, texture, and pattern of the fabric. Photorealistic.`, 
       true, // is_checked (use auto masking)
       true, // is_checked_crop (auto crop)
       30, // denoise_steps
